@@ -17,6 +17,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    "react/prop-types": "off",
+      // Скрываем ошибку POPS
+      "react/prop-types":"off",
   },
 }
