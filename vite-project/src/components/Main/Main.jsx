@@ -1,15 +1,15 @@
 import {Column} from '../../../../Column/Column.jsx';
 import {Card} from '../Card/Card.jsx';
 
-export const Main = ({MainColumn}) => {
+//export const Main = ({MainColumn}) => {
+  //{MainColumn}
 
-
-    return (
+    //return (
         <main className="main">
           <div className="container">
             <div className="main__block">
               <div className="main__content">
-                {MainColumn}
+              
                 <Column title={"Без статуса"}
                   cards = {
                     <>
@@ -93,5 +93,5 @@ export const Main = ({MainColumn}) => {
             </div>
           </div>
         </main>
-    )
-}
+   // )
+//}
