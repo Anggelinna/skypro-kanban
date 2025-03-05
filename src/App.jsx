@@ -30,7 +30,7 @@ function App() {
       </p>
 
 
-     //body
+     
      <body>
       <div class="wrapper">
         <!-- pop-up start-->
