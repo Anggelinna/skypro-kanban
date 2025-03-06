@@ -29,10 +29,9 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
 	
+	
 	//body
 		<div class="wrapper">
-      
-		
 			<div class="pop-exit" id="popExit">
 				<div class="pop-exit__container">
 					<div class="pop-exit__block">
