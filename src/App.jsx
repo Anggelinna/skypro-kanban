@@ -28,12 +28,10 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-
-
-     
-     <body>
-      <div class="wrapper">
-        <!-- pop-up start-->
+	
+	//body
+		<div class="wrapper">
+      
 		
 			<div class="pop-exit" id="popExit">
 				<div class="pop-exit__container">
@@ -61,7 +59,7 @@ function App() {
 								<form class="pop-new-card__form form-new" id="formNewCard" action="#">
 									<div class="form-new__block">
 										<label for="formTitle" class="subttl">Название задачи</label>
-										<input class="form-new__input" type="text" name="name" id="formTitle" placeholder="Введите название задачи..." autofocus>
+										<input class="form-new__input" type="text" name="name" id="formTitle" placeholder="Введите название задачи..." autofocus></input>
 									</div>
 									<div class="form-new__block">
 										<label for="textArea" class="subttl">Описание задачи</label>
@@ -135,7 +133,7 @@ function App() {
 											</div>
 										</div>
 										
-										<input type="hidden" id="datepick_value" value="08.09.2023">
+										<input type="hidden" id="datepick_value" value="08.09.2023"></input>
 										<div class="calendar__period">
 											<p class="calendar__p date-end">Выберите срок исполнения <span class="date-control"></span>.</p>
 										</div>
@@ -266,7 +264,7 @@ function App() {
 											</div>
 										</div>
 								
-										<input type="hidden" id="datepick_value" value="08.09.2023">
+										<input type="hidden" id="datepick_value" value="08.09.2023"></input>
 										<div class="calendar__period">
 											<p class="calendar__p date-end">Срок исполнения: <span class="date-control">09.09.23</span></p>
 										</div>
@@ -300,27 +298,27 @@ function App() {
 				</div>
 			</div>
 		
-		<!-- pop-up end-->
+		
 
 		<header class="header">
 			<div class="container">
 				<div class="header__block">
 					<div class="header__logo _show _light">
-						<a href="" target="_self"><img src="images/logo.png" alt="logo"></a>
+						<a href="" target="_self"><img src="images/logo.png" alt="logo"></img></a>
 					</div>
 					<div class="header__logo _dark">
-						<a href="" target="_self"><img src="images/logo_dark.png" alt="logo"></a>
+						<a href="" target="_self"><img src="images/logo_dark.png" alt="logo"></img></a>
 					</div>
 					<nav class="header__nav">
 						<button class="header__btn-main-new _hover01" id="btnMainNew"><a href="#popNewCard">Создать новую задачу</a></button>
 						<a href="#user-set-target" class="header__user _hover02">Ivan Ivanov</a>
 						<div class="header__pop-user-set pop-user-set" id="user-set-target">
-							<!-- <a href="">x</a> -->
+							 <a href="">x</a>
 							<p class="pop-user-set__name">Ivan Ivanov</p>
 							<p class="pop-user-set__mail">ivan.ivanov@gmail.com</p>
 							<div class="pop-user-set__theme">
 								<p>Темная тема</p>
-								<input type="checkbox" class="checkbox" name="checkbox">
+								<input type="checkbox" class="checkbox" name="checkbox"></input>
 							</div>
 							<button type="button" class="_hover03"><a href="#popExit">Выйти</a></button>
 						</div>
@@ -769,10 +767,9 @@ function App() {
 		
    </div>
 
-   // <script src="js/script.js"></script>
-  </body>  
+    <script src="js/script.js"></script> 
 
-  </>
+	</>
 
   );
 }
