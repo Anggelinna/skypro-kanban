@@ -8,7 +8,6 @@ const Header = () => {
             </div>
 
 
-
 			<div className="header__block">
 					<div className="header__logo _show _light">
 						<a href="" target="_self"><img src="images/logo.png" alt="logo"></img></a>
