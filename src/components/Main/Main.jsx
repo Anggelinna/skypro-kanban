@@ -17,6 +17,8 @@ export const Main = () => {
  );
 };
 
+export default Main;
+
 //const Main = () => {
 //    return (
 //
@@ -31,6 +33,3 @@ export const Main = () => {
 
 //	)
 //}
-
-export default Main;
-
