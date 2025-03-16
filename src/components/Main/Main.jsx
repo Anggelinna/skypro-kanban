@@ -1,4 +1,4 @@
-import { Column } from "../Column";
+import { Column } from "./Column";
 export const Main = () => {
  return (
 	<main className="main">
