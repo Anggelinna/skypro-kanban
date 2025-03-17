@@ -1,4 +1,4 @@
-import { Column } from "./components/Column/Column";
+import { Column } from "../Column/Column";
 export const Main = () => {
  return (
 	<main className="main">
@@ -17,7 +17,7 @@ export const Main = () => {
  );
 };
 
-export default Main;
+//export default Main;
 
 //const Main = () => {
 //    return (

@@ -3,4 +3,4 @@ const Button = () => {
     return <button className="button">(text)</button>;
 };
 
-export default Button;
+//export default Button;

@@ -70,4 +70,4 @@ const PopBrowse = () => {
 	);
 }
 
-export default PopBrowse;
+//export default PopBrowse;

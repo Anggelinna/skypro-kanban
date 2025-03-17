@@ -1,4 +1,4 @@
-import { Card } from "./components/Card/Card";
+import { Card } from "../Card/Card";
 export const Column = ({ title }) => {
     return (
         <div className="main__column column">
@@ -12,8 +12,10 @@ export const Column = ({ title }) => {
 							
 							</div>
 						</div>		
-    )
+    );
 }
+
+//export default Column;
 
 //const Column = () => {
 //    return (
@@ -51,5 +53,3 @@ export const Column = ({ title }) => {
 
 //	);
 //}
-
-export default Column;
