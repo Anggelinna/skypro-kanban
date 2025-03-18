@@ -1,4 +1,4 @@
-const Button = () => {
+export const Button = () => {
     const text = "Начать тренировку";
     return <button className="button">(text)</button>;
 };
