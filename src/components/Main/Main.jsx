@@ -1,4 +1,4 @@
-import { Column } from "../Column";
+import { Column } from "../Column/Column";
 export const Main = () => {
  return (
 	<main className="main">
@@ -17,6 +17,8 @@ export const Main = () => {
  );
 };
 
+//export default Main;
+
 //const Main = () => {
 //    return (
 //
@@ -31,6 +33,3 @@ export const Main = () => {
 
 //	)
 //}
-
-export default Main;
-

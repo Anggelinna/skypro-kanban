@@ -1,4 +1,4 @@
-const PopBrowse = () => {
+export const PopBrowse = () => {
     return (
 
 		<div className="pop-browse" id="popBrowse">
@@ -70,4 +70,4 @@ const PopBrowse = () => {
 	);
 }
 
-export default PopBrowse;
+//export default PopBrowse;

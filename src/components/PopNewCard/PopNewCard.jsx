@@ -1,6 +1,6 @@
-import { Calendar } from "../Calendar"
+import { Calendar } from "../Calendar/Calendar"
 
-const PopNewCard = () => {
+export const PopNewCard = () => {
     return (
 
 		<div className="pop-new-card" id="popNewCard">
@@ -44,4 +44,4 @@ const PopNewCard = () => {
 	);
 }
 
-export default PopNewCard;
+//export default PopNewCard;
