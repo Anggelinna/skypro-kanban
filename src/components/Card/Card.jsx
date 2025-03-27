@@ -40,5 +40,5 @@ export const Card = ({ title, theme, date }) => {
 				</div>
 			</div>
 		</div>
-    )
+    );
 }
