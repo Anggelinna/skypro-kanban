@@ -38,7 +38,7 @@ function App() {
       <GlobalStyle/>
       <WrapperStyle>
         <Header addCard={addCard} setTheme={setTheme} theme={theme}/>
-        {isLoading ? <p className='loader'>("Загрузка...")</p> : <Main cards={cards}/>}
+        {isLoading ? <p className='loader'>(Загрузка...)</p> : <Main cards={cards}/>}
       </WrapperStyle>
     </ThemeProvider>
   )
