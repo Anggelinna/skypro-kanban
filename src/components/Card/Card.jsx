@@ -1,6 +1,5 @@
 import * as S from "./Card.styled.js"
 
-
 export const Card = ({ title, topic, date }) => {
     return (
         <S.CardsItem>
