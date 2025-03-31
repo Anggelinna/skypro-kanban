@@ -5,19 +5,19 @@ export const tasks = [
         id: 1,
         date: "30.1.2023",
         theme: "Web Design",
-        title: "Прогулка",
+        title: "Сходить в кино",
         status: "Без статуса"
     },
     {
         id: 2,
-        date: "20.2.2023",
+        date: "20.2.2024",
         theme: "Copywriting",
         title: "Сдать домашку",
         status: "Нужно сделать"
     },
     {
         id: 3,
-        date: "30.1.2023",
+        date: "30.1.2025",
         theme: "Web Design",
         title: "Название задачи",
         status: "В работе"

@@ -5,10 +5,15 @@ import "./App.css";
 import { Header } from "./components/Header/Header";
 import { Main } from "./components/Main/Main";
 import { tasks } from './data';
+import { GlobalStyle, WrapperStyle } from './global.styled';
+import { ThemeProvider } from 'styled-components';
+import { dark, light } from './theme';
 
-function App() { 
-  const [cards, setCards] = useState(tasks)
-  const [isLoading, setIsLoading] = useState(true);
+
+function App() {
+  const [cards, setCards] = useState(tasks) 
+  const [isLoading, setIsLoading] = useState(false)
+  const [theme, setTheme] = useState("light")
 
   const addCard = () => {
     const newCard = {
@@ -29,11 +34,14 @@ function App() {
   }, []);
 
   return (
-    <div className="wrapper">
-      <Header addCard={addCard}/>
-      {isLoading ? <p className='loader'>Loading...</p> : <Main cards={cards}/>}
-    </div>
-  );
+    <ThemeProvider theme={theme === "light" ? light : dark}>
+      <GlobalStyle/>
+      <WrapperStyle>
+        <Header addCard={addCard} setTheme={setTheme} theme={theme}/>
+        {isLoading ? <p className='loader'>("Загрузка...")</p> : <Main cards={cards}/>}
+      </WrapperStyle>
+    </ThemeProvider>
+  )
 }
 
 export default App;
