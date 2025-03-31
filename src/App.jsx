@@ -1,61 +1,47 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Header } from "./components/Header/Header"
+//import reactLogo from "./assets/react.svg";
+//import viteLogo from "/vite.svg";
+import { useEffect, useState } from 'react';
+import "./App.css";
+import { Header } from "./components/Header/Header";
 import { Main } from "./components/Main/Main";
+import { tasks } from './data';
+import { GlobalStyle, WrapperStyle } from './global.styled';
+import { ThemeProvider } from 'styled-components';
+import { dark, light } from './theme';
 
 
 function App() {
+  const [cards, setCards] = useState(tasks) 
+  const [isLoading, setIsLoading] = useState(false)
+  const [theme, setTheme] = useState("light")
+
+  const addCard = () => {
+    const newCard = {
+      id: cards.length + 1,
+      date: "1.1.2023",
+      theme: "Web Design",
+      title: "Сходить в кино",
+      status: "Без статуса"
+    }
+    setCards([...cards, newCard])
+  }
+
+  useEffect(() => {
+    //setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 3000)
+  }, []);
 
   return (
-    <div className="wrapper">
-      <Header/>
-      <Main/>
-    </div>
+    <ThemeProvider theme={theme === "light" ? light : dark}>
+      <GlobalStyle/>
+      <WrapperStyle>
+        <Header addCard={addCard} setTheme={setTheme} theme={theme}/>
+        {isLoading ? <p className='loader'>("Загрузка...")</p> : <Main cards={cards}/>}
+      </WrapperStyle>
+    </ThemeProvider>
   )
 }
 
-
-
-//import { useState } from 'react'
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
-//import './App.css'
-
-//function App() {
-//  const [count, setCount] = useState(0)
-
-//  return (
-//    <>
-//      <div>
-//        <a href="https://vite.dev" target="_blank">
-//          <img src={viteLogo} className="logo" alt="Vite logo" />
-//        </a>
-//        <a href="https://react.dev" target="_blank">
-//          <img src={reactLogo} className="logo react" alt="React logo" />
-//        </a>
-//      </div>
-//      <h1>Vite + React</h1>
-//      <div className="card">
-//        <button onClick={() => setCount((count) => count + 1)}>
-//          count is {count}
-//        </button>
-//        <p>
-//          <code>src/App.jsx</code>
-//        </p>
-//      </div>
-//      <p className="read-the-docs">
-//        Click on the Vite and React logos to learn more
-//      </p>
-	
-	
-//    <div class="wrapper"></div>
-//    <script src="js/script.js"></script>
-
-//	</>
-
-//  );
-//}
-
-
-export default App
+export default App;

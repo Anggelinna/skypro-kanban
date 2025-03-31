@@ -1,4 +1,4 @@
-const PopUser = () => {
+export const PopUser = () => {
     return (
 
     <div className="pop-exit" id="popExit">
@@ -19,4 +19,4 @@ const PopUser = () => {
   );
 }
 
-export default PopUser;
+//export default PopUser;
