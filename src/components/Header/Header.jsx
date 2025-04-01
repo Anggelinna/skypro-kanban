@@ -33,7 +33,7 @@ export const Header = ({addCard, theme, setTheme}) => {
 									<p>Темная тема</p>
 									<input checked={theme === "dark"} onClick={onTheme} type="checkbox" className="checkbox" name="checkbox"/>
 								</div>
-								<button type="button" className="_hover03"><a href="#popExit">Выйти</a></button>
+								<S.PopUserSetButton><a href="#popExit">Выйти</a></S.PopUserSetButton>
 							</S.HeaderPopUserSet>
 						)}
 

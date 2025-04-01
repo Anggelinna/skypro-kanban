@@ -49,6 +49,18 @@ export const HeaderPopUserSet = styled.div`
     z-index: 2;
 `
 
+export const PopUserSetButton = styled.button`
+    width: 72px;
+    height: 30px;
+    background: transparent;
+    border-radius: 4px;
+    border: 1px solid ${({theme}) => theme.headerUser};
+    a {
+        color: ${({theme}) => theme.headerUser};
+    }
+    ${Hover03}
+`;
+
 export const HeaderBtnNew = styled.button`
     width: 178px;
     height: 30px;
