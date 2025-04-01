@@ -1,13 +1,13 @@
 import * as S from "./Card.styled.js"
 
 
-export const Card = ({ title, topic, date }) => {
+export const Card = ({ title, theme, date }) => {
     return (
         <S.CardsItem>
 			<S.Card>
 				<S.CardGroup>
-					<S.CardTheme $color={topic}>
-						<p>{topic}</p>
+					<S.CardTheme $color={theme}>
+						<p>{theme}</p>
 					</S.CardTheme>
 					<a href="#popBrowse" target="_self">
 						<S.CardBtn>
