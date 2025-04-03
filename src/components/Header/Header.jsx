@@ -27,13 +27,13 @@ export const Header = ({addCard, theme, setTheme}) => {
 						{isOpen && (
 							<S.HeaderPopUserSet className="pop-user-set" id="user-set-target">
 								{/*  <a href="">x</a>  */}
-								<p className="pop-user-set__name">Ivan Ivanov</p>
-								<p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
-								<div className="pop-user-set__theme">
+								<S.PopUserSetName>Ivan Ivanov</S.PopUserSetName>
+								<S.PopUserSetMail>ivan.ivanov@gmail.com</S.PopUserSetMail>
+								<S.PopUserSetTheme>
 									<p>Темная тема</p>
 									<input checked={theme === "dark"} onClick={onTheme} type="checkbox" className="checkbox" name="checkbox"/>
-								</div>
-								<button type="button" className="_hover03"><a href="#popExit">Выйти</a></button>
+								</S.PopUserSetTheme>
+								<S.PopUserSetButton><a href="#popExit">Выйти</a></S.PopUserSetButton>
 							</S.HeaderPopUserSet>
 						)}
 
