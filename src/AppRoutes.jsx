@@ -3,14 +3,8 @@ import { useState } from 'react';
 import { routesPath } from './global.styled.js'
 
 import MainPage from "./pages/MainPage/MainPage";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
 import { ExitPage } from './pages/ExitPage/ExitPage.jsx';
-
-import { GlobalStyle, WrapperStyle } from './global.styled';
-import { ThemeProvider } from 'styled-components';
-import { dark, light } from './theme';
-
+import { LoginPage } from './pages/LoginPage/LoginPage.jsx';
 
 export const AppRoutes = ({setTheme, theme}) => {
 
