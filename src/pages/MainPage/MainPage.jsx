@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 //import { format } from "date-fns";
 import { Main } from '../../components/Main/Main.jsx';
-import { tasks } from './data';
-import { Wrapper } from "../../lib/global.styled.js";
+import { tasks } from './../../data.js';
+import { WrapperStyle } from "../../global.styled.js";
 import { Header } from '../../components/Header/Header.jsx';
-import {PopNewCard} from '../../components/Popups/PopNewCard/PopNewCard.jsx';
+import {PopNewCard} from '../../components/PopNewCard/PopNewCard.jsx';
 import { Outlet } from 'react-router-dom';
 
 
@@ -32,7 +32,7 @@ export const MainPage = ({setTheme, theme}) => {
   }, []);
 
     return (
-        <Wrapper>
+        <WrapperStyle>
                 {/* pop-up start*/}
             <Outlet />
                 {/* Перенесены в Outlet */}
@@ -45,6 +45,6 @@ export const MainPage = ({setTheme, theme}) => {
             <Header addCard={addCard} setTheme={setTheme} theme={theme}/>
             {isLoading ? ("Загрузка...") : (<Main cards={cards}/>)}
             {/* <MainComponent isLoading={isLoading} cards={cards}/> */}
-        </Wrapper>
+        </WrapperStyle>
     )
 }

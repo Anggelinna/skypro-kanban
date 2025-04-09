@@ -1,13 +1,13 @@
-import { Wrapper } from '../../global.styled.js';
+import { WrapperStyle, routesPath  } from '../../global.styled.js';
 import * as S from '../../pages/LoginPage/LoginPage.styled.js';
-import { routesPath } from "../../global.styled.js";
-
+//import { routesPath } from "../../global.styled.js";
+import { Link } from "react-router-dom";
 
 export const LoginPage = ({ login }) => {
 
     return (
       <>
-        <Wrapper>
+        <WrapperStyle>
           <S.ContainerLogin>
             <S.Modal>
               <S.ModalBlock>
@@ -49,7 +49,7 @@ export const LoginPage = ({ login }) => {
               </S.ModalBlock>
             </S.Modal>
           </S.ContainerLogin>
-        </Wrapper>
+        </WrapperStyle>
       </>
     );
   }
