@@ -26,7 +26,7 @@ export const Header = ({addCard, theme, setTheme}) => {
 						<S.HeaderUser onClick={toggleOpenUser}>Ivan Ivanov</S.HeaderUser>
 						{isOpen && (
 							<S.HeaderPopUserSet className="pop-user-set" id="user-set-target">
-								{/*  <a href="">x</a>  */}
+								{/*  <a href="">x</a>  */}  
 								<S.PopUserSetName>Ivan Ivanov</S.PopUserSetName>
 								<S.PopUserSetMail>ivan.ivanov@gmail.com</S.PopUserSetMail>
 								<S.PopUserSetTheme>
