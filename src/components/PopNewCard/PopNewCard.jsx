@@ -17,7 +17,7 @@ export const PopNewCard = () => {
                 action="#"
               >
                 <div className="form-new__block">
-                  <label for="formTitle" className="subttl">
+                  <label htmlFor="formTitle" className="subttl">
                     Название задачи
                   </label>
                   <input
@@ -26,11 +26,11 @@ export const PopNewCard = () => {
                     name="name"
                     id="formTitle"
                     placeholder="Введите название задачи..."
-                    autofocus
-                  ></input>
+                    autoFocus=""
+                  />
                 </div>
                 <div className="form-new__block">
-                  <label for="textArea" className="subttl">
+                  <label htmlFor="textArea" className="subttl">
                     Описание задачи
                   </label>
                   <textarea
@@ -38,9 +38,11 @@ export const PopNewCard = () => {
                     name="text"
                     id="textArea"
                     placeholder="Введите описание задачи..."
-                  ></textarea>
+                    defaultValue={""}
+                  />
                 </div>
               </form>
+              
             </div>
             <div className="pop-new-card__categories categories">
               <p className="categories__p subttl">Категория</p>
@@ -64,6 +66,4 @@ export const PopNewCard = () => {
       </div>
     </div>
   );
-};
-
-//export default PopNewCard;
+}

@@ -6,12 +6,15 @@ import { WrapperStyle } from "../../global.styled.js";
 import { Header } from '../../components/Header/Header.jsx';
 import {PopNewCard} from '../../components/PopNewCard/PopNewCard.jsx';
 import { Outlet } from 'react-router-dom';
+import { getCards } from "../../services/Api.js";
 
 
-export const MainPage = ({setTheme, theme}) => {
+export const MainPage = ({setTheme, theme, isAuth}) => {
   const [cards, setCards] = useState(tasks) 
   const [isLoading, setIsLoading] = useState(false)
   //const [theme, setTheme] = useState("light")
+  const [error, setError] = useState('');
+  
 
   const addCard = () => {
     const newCard = {
@@ -25,11 +28,19 @@ export const MainPage = ({setTheme, theme}) => {
   }
 
   useEffect(() => {
-    //setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
-  }, []);
+    setIsLoading (true)
+
+    getCards(isAuth.token).then((response)=>{
+        setError('')
+        setCards(response.tasks)
+        setIsLoading(false)
+    }).catch((err) => {
+        setError(err)
+    }).finally(()=>{
+        setIsLoading(false)
+    })
+
+},[isAuth]);
 
     return (
         <WrapperStyle>
@@ -42,9 +53,9 @@ export const MainPage = ({setTheme, theme}) => {
 
                 {/* pop-up end*/}
 
-            <Header addCard={addCard} setTheme={setTheme} theme={theme}/>
-            {isLoading ? ("Загрузка...") : (<Main cards={cards}/>)}
-            {/* <MainComponent isLoading={isLoading} cards={cards}/> */}
+            <Header isAuth={isAuth} addCard={addCard} setTheme={setTheme} theme={theme}/>
+              {error ? <p>${error}</p> : (isLoading ? ("Загрузка...") : (<Main errorMsg={error}  cards={cards}/>)
+            )}
         </WrapperStyle>
     )
 }
