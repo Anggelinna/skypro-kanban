@@ -12,6 +12,5 @@ export const NotFound = () => {
                 <Link to={routesPath.MAIN}>Перейти на главную страницу</Link>
             </button>
         </WrapperStyle>
-
     );
 }

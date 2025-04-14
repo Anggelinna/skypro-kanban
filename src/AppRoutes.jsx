@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 import { routesPath } from './global.styled.js'
 
@@ -10,29 +10,24 @@ import { LoginPage } from './pages/LoginPage/LoginPage.jsx';
 import { RegisterPage } from './pages/RegisterPage/RegisterPage.jsx';
 import { PopBrowsePage } from './pages/PopBrowsePage/PopBrowsePage.jsx';
 
+
 export const AppRoutes = ({setTheme, theme}) => {
 
-  const [isAuth, setIsAuth] = useState(false);
-  const navigate = useNavigate();
-
-  const login = () => {
-    setIsAuth(true);
-    navigate(routesPath.MAIN);
-  }
+  const [isAuth, setIsAuth] = useState();
 
   return (
-    <Routes>
-       <Route element={<PrivateRoute isAuth={isAuth} />}>
-          <Route path={routesPath.MAIN} element={<MainPage setTheme={setTheme} theme={theme} />}>
-              <Route path={routesPath.CARD_ID} element={<PopBrowsePage />} />
-              <Route path={routesPath.EXIT} element={<ExitPage setIsAuth={setIsAuth} />} />
-            </Route>
+      <Routes>
+        <Route element={<PrivateRoute isAuth={isAuth} />}>
+          <Route 
+          path={routesPath.MAIN} element={<MainPage isAuth={isAuth} setTheme={setTheme} theme={theme} />}>
+            <Route path={routesPath.CARD_ID} element={<PopBrowsePage />} />
+            <Route path={routesPath.EXIT} element={<ExitPage setIsAuth={setIsAuth} />} />
           </Route>
-        <Route path={routesPath.LOGIN} element={<LoginPage login={login} />} />
+        </Route>
+        <Route path={routesPath.LOGIN} element={<LoginPage setIsAuth={setIsAuth} />} />
         <Route path={routesPath.REGISTER} element={<RegisterPage />} />
         <Route path={routesPath.NOT_FOUND} element={<NotFound />} />
-  </Routes> 
-  )
-}
-
-export default AppRoutes;
+      </Routes>
+    )
+  }
+//export default AppRoutes;

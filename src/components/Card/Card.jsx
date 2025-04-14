@@ -8,18 +8,18 @@ export const Card = ({card}) => {
 		<S.Card>
 		  <S.CardGroup>
 			<S.CardTheme $color={themeColor[card.theme]}>
-			  <S.CardName>{card.id}</S.CardName> 
+			  <S.CardName>{card.theme}</S.CardName> 
 			</S.CardTheme>
-      <Link to = {`/card/${card.id}`} >
+      <Link to = {`/card/${card._id}`} >
             <S.CardBtn>
               <S.CardDiv />
               <S.CardDiv />
               <S.CardDiv />
             </S.CardBtn>
-      </Link>
-      </S.CardGroup>
+          </Link>
+        </S.CardGroup>
         <S.CardContent>
-          <Link to = {`/card/${card.id}`}>
+          <Link to = {`/card/${card._id}`}>
             <S.CardTitle>{card.title}</S.CardTitle>
           </Link>
           <S.CardDate>

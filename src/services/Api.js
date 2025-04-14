@@ -1,30 +1,86 @@
-import axios from 'axios'
+//import axios from 'axios'
 
-const API_URL = 'https://wedev-api.sky.pro/api/words/'
-export async function fetchWords({ token }) {
-   try {
-      const data = await axios.get(API_URL, {
-         headers: {
-            Authorization: 'Bearer ' + token,
-         },
-      })
-      return data.data.words;
-      // когда работаем с axios, не забываем, что результат лежит в ключе datа
-   } catch (error) {
-      throw new Error(error.message)
-   }
-}
+const host = "https://wedev-api.sky.pro/api/kanban";
+const userHost = "https://wedev-api.sky.pro/api/user";
 
-export async function postWord({ token, word }) {
-    try {
-       const data = await axios.post(API_URL, word, {
-          headers: {
-             Authorization: 'Bearer ' + token,
-             'Content-Type': 'text/html',
-          },
-       })
-       return data.data.tasks
-    } catch (error) {
-       throw new Error(error.message)
-    }
+//Получить список задач
+export const getCards = (token) => {
+   return fetch(host, {
+     headers: {
+       Authorization: `Bearer ${token}`,
+     }
+   }).then((response)=>{
+     if (!response.status === 401) {
+       throw new Error("Ошибка авторизации");
+     }
+     if (response.status === 500) {
+       throw new Error("Ошибка сервера");
+     }
+     if (!response.ok) {
+       throw new Error("Что то пошло не так");
+     }
+     return response.json();
+   });
  }
+
+ //Добавить задачу в список
+export async function postTodo({token, text}) {
+   const response = await fetch(host, {
+     headers: {
+       Authorization:  `Bearer ${token}`,
+     },
+     method: "POST",
+     body: JSON.stringify({text})
+   });
+   if (!response.status === 200) {
+     throw new Error("Ошибка");
+   }
+   const data = await response.json();
+   return data;
+ }
+
+ //РЕГИСТРАЦИЯ
+export const register = ({ name, login, password }) => {
+   return fetch(userHost, {
+     method: "POST",
+     body: JSON.stringify({
+       name,
+       login,
+       password,
+     }),
+   }).then((response) => {
+     if (response.status === 400) {
+       throw new Error("Такой пользователь уже существует");
+     }
+     if (response.status === 500) {
+       throw new Error("Ошибка сервера");
+     }
+     if (!response.ok) {
+       throw new Error("Что то пошло не так");
+     }
+     return response.json();
+   });
+ }
+ 
+ //АВТОРИЗАЦИЯ
+ export const loginAuth = ({ login, password }) => {
+  return fetch(userHost + "/login", {
+     method: "POST",
+     body: JSON.stringify({
+       login,
+       password,
+     }),
+   }).then((response) => {
+    if (response.status === 400) {
+      throw new Error("Неверный логин или пароль");
+    }
+     if (response.status === 500) {
+       throw new Error("Ошибка сервера");
+     }
+     if (!response.ok) {
+       throw new Error("Что то пошло не так");
+     }
+     return response.json();
+   });
+ }
+ 

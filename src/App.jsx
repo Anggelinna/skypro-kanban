@@ -13,8 +13,6 @@ import { AppRoutes } from './AppRoutes.jsx';
 
 
 function App() {
-  //const [cards, setCards] = useState(tasks) 
-  //const [isLoading, setIsLoading] = useState(false)
   const [theme, setTheme] = useState(true);
   
   return (
