@@ -1,5 +1,7 @@
-import styled, { keyframes } from "styled-components";
+import { keyframes } from "styled-components";
+import styled from "styled-components";
 import { themeColor } from "../../global.styled";
+import { Cards } from "../Column/Column.styled";
 
 export const CardAnimation = keyframes`
     0% {
