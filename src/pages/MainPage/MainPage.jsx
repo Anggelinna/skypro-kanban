@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 //import { format } from "date-fns";
 import { Main } from '../../components/Main/Main.jsx';
-import { tasks } from './../../data.js';
+//import { tasks } from './../../data.js';
 import { WrapperStyle } from "../../global.styled.js";
 import { Header } from '../../components/Header/Header.jsx';
 import {PopNewCard} from '../../components/PopNewCard/PopNewCard.jsx';
@@ -10,11 +10,11 @@ import { getCards } from "../../services/Api.js";
 
 
 export const MainPage = ({setTheme, theme, isAuth}) => {
-  const [cards, setCards] = useState(tasks) 
+  const [cards, setCards] = useState() 
   const [isLoading, setIsLoading] = useState(false)
   //const [theme, setTheme] = useState("light")
   const [error, setError] = useState('');
-  
+
 
   const addCard = () => {
     const newCard = {
