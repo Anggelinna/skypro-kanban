@@ -8,7 +8,7 @@ import { register } from "../../services/Api.js";
 export const RegisterPage = () => {
 
   const navigate = useNavigate();
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [inputValue, setInputValue] = useState({
     name: '',
@@ -17,6 +17,7 @@ export const RegisterPage = () => {
   })
 
   const onChangeInput = (e) => {
+    // console.log(e);
     const {value, name} = e.target //;
     // console.log(inputValue)
     setInputValue({...inputValue, [name]: value})
@@ -27,17 +28,18 @@ export const RegisterPage = () => {
 
     const {name, login, password} = inputValue; //пустые поля
     if (!name||!login||!password) {
-      return setErrorMsg("Заполните все поля")
+      return setErrorMessage("Заполните все поля")
     }
 
     register(inputValue).then(() => {
-      setErrorMsg('')
+      setErrorMessage('')
       navigate(routesPath.LOGIN)
     }).catch ((err)=>{
-      setErrorMsg(err.message)
+      setErrorMessage(err.message)
 
     })
   }
+
 
     return (
         <>
@@ -70,7 +72,7 @@ export const RegisterPage = () => {
                   id="passwordFirst"
                   placeholder="Пароль"
                 />
-                 <p style={{color:"red"}}>{errorMsg}</p>
+                 <p style={{color:"red"}}>{errorMessage}</p>
                 <Link to={routesPath.LOGIN}>
                   <S.ModalBtnRegisterEnter id="RegisterEnter">
                     <S.ModalBtnRegisterEnterA>
@@ -93,3 +95,4 @@ export const RegisterPage = () => {
     </>
   );
 }
+     
