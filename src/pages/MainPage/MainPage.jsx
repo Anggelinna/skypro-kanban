@@ -11,7 +11,7 @@ import { tasks } from "../../data.js";
 
 export const MainPage = ({setTheme, theme, isAuth}) => {
     const [cards, setCards] = useState(tasks);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -30,10 +30,10 @@ export const MainPage = ({setTheme, theme, isAuth}) => {
     useEffect(() => {
         setIsLoading (true)
 
-        getCards(isAuth.token).then((response)=>{
+        getCards(isAuth.token).then(()=>{
             setErrorMsg('')
-            setCards(response.tasks)
-            setIsLoading(false)
+            //setCards(response.tasks)
+            //setIsLoading(false)
         }).catch((err) => {
             setErrorMsg(err)
         }).finally(()=>{
