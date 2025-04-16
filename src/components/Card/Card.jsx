@@ -2,15 +2,15 @@ import * as S from "./Card.styled.js"
 import { Link } from "react-router-dom";
 import { themeColor } from "../../global.styled.js";
 
-export const Card = ({card}) => {  
+export const Card = ({theme, id, title, date}) => {  
 	return (
 	  <S.CardsItem>
 		<S.Card>
 		  <S.CardGroup>
-			<S.CardTheme $color={themeColor[card.theme]}>
-			  <S.CardName>{card.theme}</S.CardName> 
+			<S.CardTheme $color={themeColor[theme]}>
+			  <S.CardName>{theme}</S.CardName> 
 			</S.CardTheme>
-      <Link to = {`/card/${card._id}`} >
+      <Link to = {`/card/${id}`} >
             <S.CardBtn>
               <S.CardDiv />
               <S.CardDiv />
@@ -19,8 +19,8 @@ export const Card = ({card}) => {
           </Link>
         </S.CardGroup>
         <S.CardContent>
-          <Link to = {`/card/${card._id}`}>
-            <S.CardTitle>{card.title}</S.CardTitle>
+          <Link to = {`/card/${id}`}>
+            <S.CardTitle>{title}</S.CardTitle>
           </Link>
           <S.CardDate>
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -34,7 +34,7 @@ export const Card = ({card}) => {
                 </clipPath>
               </defs>
             </svg>
-            <p>{card.date}</p>
+            <p>{date}</p>
           </S.CardDate>
         </S.CardContent>
       </S.Card>
