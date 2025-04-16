@@ -1,5 +1,6 @@
 import { useState } from "react"
 import * as S from "./Header.styled.js";
+import { Link } from "react-router-dom";
 import { routesPath } from "../../global.styled.js";
 
 export const Header = ({ addCard, setTheme, theme, isAuth }) => {
@@ -26,9 +27,9 @@ export const Header = ({ addCard, setTheme, theme, isAuth }) => {
 						<a href="" target="_self"><img src="images/logo_dark.png" alt="logo"/></a>
 					</S.HeaderLogo>
 					  <S.HeaderNav>
-						  <S.HeaderBtnMainNew id="btnMainNew">
-							  <S.HeaderBtnMainNewLink href="#popNewCard" onClick={addCard}> Создать новую задачу </S.HeaderBtnMainNewLink>
-						  </S.HeaderBtnMainNew>
+						  <S.HeaderBtnNew id="btnMainNew">
+							  <S.HeaderBtnNewLink href="#popNewCard" onClick={addCard}> Создать новую задачу </S.HeaderBtnNewLink>
+						  </S.HeaderBtnNew>
 						  <S.HeaderUser onClick={openModal}> {isAuth.name} </S.HeaderUser>
 						  {isOpen && (
 							<S.HeaderPopUserSet id="user-set-target">
