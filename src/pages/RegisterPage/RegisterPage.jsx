@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { WrapperStyle } from '../../global.styled.js';
+import { WrapperStyle } from '../../lib/global.styled.js';
 import * as S from '../../pages/RegisterPage/RegisterPage.styled.js';
-import { routesPath } from "../../global.styled.js";
+import { routesPath } from "../../lib/routesPath.js";
 import { useState  } from "react";
 import { register } from "../../services/Api.js";
 

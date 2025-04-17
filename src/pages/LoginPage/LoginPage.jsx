@@ -1,4 +1,5 @@
-import { routesPath, WrapperStyle } from '../../global.styled.js';
+import { WrapperStyle } from '../../lib/global.styled.js';
+import { routesPath } from '../../lib/routesPath.js';
 import * as S from '../../pages/LoginPage/LoginPage.styled.js';
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";

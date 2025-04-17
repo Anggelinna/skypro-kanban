@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 //import { format } from "date-fns";
 import { Main } from '../../components/Main/Main.jsx';
-import { WrapperStyle } from "../../global.styled.js";
+import { WrapperStyle } from "../../lib/global.styled.js";
 import { Header } from '../../components/Header/Header.jsx';
 import {PopNewCard} from '../../components/PopNewCard/PopNewCard.jsx';
 import { Outlet } from 'react-router-dom';

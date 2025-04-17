@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-import { routesPath } from "../../global.styled.js";
+import { routesPath } from "../../lib/routesPath.js";
 import * as S from "./PopBrowse.styled.js"
 
 export const PopBrowse = () => {

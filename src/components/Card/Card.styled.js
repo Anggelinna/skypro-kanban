@@ -1,6 +1,6 @@
 import { keyframes } from "styled-components";
 import styled from "styled-components";
-import { themeColor } from "../../global.styled";
+//import { themeColor } from "../../global.styled";
 import { Cards } from "../Column/Column.styled";
 
 export const CardAnimation = keyframes`
@@ -48,7 +48,7 @@ export const CardTheme = styled.div`
     padding: 5px 14px;
     border-radius: 18px;
     
-    ${({$color}) => themeColor($color)}
+    ${({$color}) => $color}
 
 `;
 

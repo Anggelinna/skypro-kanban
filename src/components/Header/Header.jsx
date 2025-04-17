@@ -1,7 +1,7 @@
 import { useState } from "react"
 import * as S from "./Header.styled.js";
 import { Link } from "react-router-dom";
-import { routesPath } from "../../global.styled.js";
+import { routesPath } from "../../lib/routesPath.js";
 
 export const Header = ({ addCard, setTheme, theme, isAuth }) => {
 	const [isOpen, setIsOpen] = useState(false);
