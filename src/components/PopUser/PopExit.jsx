@@ -1,4 +1,4 @@
-import { routesPath } from "../../global.styled.js";
+import { routesPath } from "../../lib/routesPath.js";
 
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./PopExit.styled.js";

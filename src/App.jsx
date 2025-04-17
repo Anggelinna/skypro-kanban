@@ -6,7 +6,7 @@ import { useState } from 'react';
 //import { Header } from "./components/Header/Header";
 //import { Main } from "./components/Main/Main";
 //import { tasks } from './data';
-import { GlobalStyle } from './global.styled';
+import { GlobalStyle } from './lib/global.styled.js';
 import { ThemeProvider } from 'styled-components';
 import { dark, light } from './theme';
 import { AppRoutes } from './AppRoutes.jsx';

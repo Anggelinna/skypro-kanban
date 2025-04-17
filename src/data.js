@@ -26,7 +26,7 @@ export const tasks = [
         id: 4,
         date: "12.1.2023",
         theme: "Research",
-        title: "Название задачи",
+        title: "Уехать на выходных",
         status: "Тестирование"
     },
     {

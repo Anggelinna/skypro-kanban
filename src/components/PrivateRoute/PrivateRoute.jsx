@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { routesPath } from "../../global.styled";
+import { routesPath } from "../../lib/routesPath";
 
 
 export const PrivateRoute = ({ isAuth }) => {

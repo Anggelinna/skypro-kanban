@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
-import { routesPath } from './global.styled.js'
+import { routesPath } from './lib/routesPath.js'
 
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute.jsx';
 import { MainPage } from "./pages/MainPage/MainPage.jsx";

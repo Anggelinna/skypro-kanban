@@ -1,14 +1,20 @@
 import { useState } from "react"
 import * as S from "./Header.styled.js";
-import { routesPath } from "../../global.styled.js";
+import { Link } from "react-router-dom";
+import { routesPath } from "../../lib/routesPath.js";
 
 export const Header = ({ addCard, setTheme, theme, isAuth }) => {
-	const [isOpen, setIsOpen] = useState(false)
-	const toggleOpenUser = () => {
-		setIsOpen(!isOpen)
-	}
+	const [isOpen, setIsOpen] = useState(false);
 
-		setTheme(theme === "light" ? "dark" : "light")
+  const openModal = (e) => {
+    e.preventDefault();
+    setIsOpen((prev) => !prev);
+   }
+
+   
+   const onTheme = () => {
+	setTheme(theme === "light" ? "dark" : "light")
+}
 	
 	return (
 	  <S.Header>
@@ -21,10 +27,10 @@ export const Header = ({ addCard, setTheme, theme, isAuth }) => {
 						<a href="" target="_self"><img src="images/logo_dark.png" alt="logo"/></a>
 					</S.HeaderLogo>
 					  <S.HeaderNav>
-						  <S.HeaderBtnMainNew id="btnMainNew">
-							  <S.HeaderBtnMainNewLink href="#popNewCard" onClick={addCard}> Создать новую задачу </S.HeaderBtnMainNewLink>
-						  </S.HeaderBtnMainNew>
-						  <S.HeaderUser onClick={toggleOpenUser}> {isAuth.name} </S.HeaderUser>
+						  <S.HeaderBtnNew id="btnMainNew">
+							  <S.HeaderBtnNewLink href="#popNewCard" onClick={addCard}> Создать новую задачу </S.HeaderBtnNewLink>
+						  </S.HeaderBtnNew>
+						  <S.HeaderUser onClick={openModal}> {isAuth.name} </S.HeaderUser>
 						  {isOpen && (
 							<S.HeaderPopUserSet id="user-set-target">
 								  {/* <a href="">x</a> */}
@@ -32,7 +38,7 @@ export const Header = ({ addCard, setTheme, theme, isAuth }) => {
 								  <S.HeaderUserSetMail>{isAuth.login}</S.HeaderUserSetMail>
 								  <S.HeaderUserSetTheme>
 									 <p>Темная тема</p>
-									  <input onChange={()=>setTheme(!theme)} type="checkbox" className="checkbox" name="checkbox" />
+									  <input onChange={()=>onTheme(!theme)} type="checkbox" className="checkbox" name="checkbox" />
 								  </S.HeaderUserSetTheme>
 									  <S.HeaderExit>
 										  <Link to={routesPath.EXIT}>

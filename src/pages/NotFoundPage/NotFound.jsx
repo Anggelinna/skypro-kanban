@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { WrapperStyle } from "../../global.styled";
-import { routesPath } from "../../global.styled";
+import { WrapperStyle } from "../../lib/global.styled"
+import { routesPath } from "../../lib/routesPath";
 
 
 export const NotFound = () => {

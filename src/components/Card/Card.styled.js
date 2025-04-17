@@ -1,6 +1,6 @@
 import { keyframes } from "styled-components";
 import styled from "styled-components";
-import { themeColor } from "../../global.styled";
+//import { themeColor } from "../../global.styled";
 import { Cards } from "../Column/Column.styled";
 
 export const CardAnimation = keyframes`
@@ -48,14 +48,16 @@ export const CardTheme = styled.div`
     padding: 5px 14px;
     border-radius: 18px;
     
-    ${({$color}) => themeColor($color)}
+    ${({$color}) => $color}
 
-    p {
-        font-size: 10px;
-        font-weight: 600;
-        line-height: 10px;
-    }
 `;
+
+export const CardName = styled.p`
+   font-size: 10px;
+   font-weight: 600;
+   line-height: 10px;
+ 
+ `;
 
 export const CardBtn = styled.div`
     width: 24px;
@@ -64,13 +66,14 @@ export const CardBtn = styled.div`
     align-items: center;
     justify-content: space-around;
     padding: 2px;
-    div {
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background-color: #94A6BE;
-    }
 `;
+
+export const CardDiv = styled(CardBtn)`
+   width: 4px;
+   height: 4px;
+   border-radius: 50%;
+   background-color: #94a6be;
+ `;
 
 export const CardContent = styled.div`
     height: 64px;
@@ -79,7 +82,6 @@ export const CardContent = styled.div`
     align-items: flex-start;
     justify-content: space-between;
 `;
-
 
 export const CardTitle = styled.h3`
     font-size: 14px;

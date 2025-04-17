@@ -1,4 +1,5 @@
-import styled, { createGlobalStyle, css } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import { css } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
     * {
@@ -117,12 +118,3 @@ export const Hover03 = css`
     }
     
 `
-
-export const routesPath = {
-    MAIN: "/",
-    CARD_ID: "/card/:id",
-    LOGIN: "/login",
-    REGISTER: "/register",
-    EXIT: "/exit",
-    NOT_FOUND: "*",
-  };

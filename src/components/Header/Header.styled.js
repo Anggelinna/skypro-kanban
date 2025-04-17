@@ -1,11 +1,17 @@
 import styled from "styled-components";
-import { Hover01, Hover02, Hover03 } from "../../global.styled";
+import { Hover01, Hover02, Hover03 } from "../../lib/global.styled";
 
 export const Header = styled.header`
     width: 100%;
     margin: 0 auto;
     background-color: ${({theme}) => theme.headerBg};
 `
+export const Container = styled.div`
+  max-width: 1260px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 30px;
+`;
 
 export const HeaderBlock = styled.div`
     height: 70px;
@@ -133,6 +139,11 @@ export const HeaderBtnNew = styled.button`
 
     ${Hover01}
 `
+export const HeaderBtnNewLink=styled.a`
+  color: #FFFFFF;
+`;
+
+
 export const HeaderUser = styled.a`
     height: 20px;
     display: flex;
@@ -158,3 +169,74 @@ export const HeaderUser = styled.a`
 
     ${Hover02}
 `
+
+export const HeaderUserSetName = styled.p`
+  color: ${({theme})=> theme.text};
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: -0.14px;
+  margin-bottom: 4px;
+`;
+
+export const HeaderUserSetMail = styled.p`
+  color: #94A6BE;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.14px;
+  margin-bottom: 10px;
+`;
+
+export const HeaderUserSetTheme = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+
+  p {
+    color: ${({theme})=> theme.text};
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: -0.14px;
+  }
+
+  input[type=checkbox] {
+    position: relative;
+    width: 24px;
+    height: 13px;
+    border-radius: 100px;
+    background: #EAEEF6;
+    outline: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background-color: #94A6BE;
+        transition: 0.5s;
+    }
+  }
+  input:checked[type=checkbox]::before {
+    left: 12px;
+  }
+`
+
+export const HeaderExit= styled.button`
+  width: 72px;
+  height: 30px;
+  background: transparent;
+  color: #565eef;
+  border-radius: 4px;
+  border: 1px solid #565eef;
+  ${Hover03}
+  &:hover a {
+    color: #ffffff;
+  }
+`;
+
