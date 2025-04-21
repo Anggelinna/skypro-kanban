@@ -11,11 +11,12 @@ import { UserContext } from "../../context/UserContext.js";
 import { TaskContext } from "../../context/taskContext.js";
 
 export const MainPage = ({ setTheme, theme }) => {
-  const [cards, setCards] = useContext(TaskContext);
+  //const [cards, setCards] = useState(tasks);
   const [isLoading, setIsLoading] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState("");
 
+  const {cards, setCards} = useState(TaskContext);
   const { user } = useContext(UserContext);
 
   const addCard = () => {
@@ -45,6 +46,7 @@ export const MainPage = ({ setTheme, theme }) => {
         setIsLoading(false);
       });
   }, [user, setCards]);
+
 
   return (
     <WrapperStyle>

@@ -1,5 +1,7 @@
 import styled from "styled-components";
-
+import { themeColor } from "../../lib/global.styled.js";
+import { CardName } from "../Card/Card.styled.js";
+//import { Hover01, Hover03 } from "../../lib/global.styled.js";
 
 export const PopBrouwseStyled = styled.div`
   width: 100%;
@@ -54,11 +56,99 @@ export const PopBrouwseTitle = styled.h3`
   margin-bottom: 18px;
 `;
 
+export const PopBroweColor = styled.div`
+  display: inline-block;
+  padding: 8px 20px 8px 20px;
+  width: 115px;
+  height: 30px;
+  border-radius: 24px;
+  background-color: ${({ $themeColor }) =>
+        themeColor[$themeColor]?.backgroundColor || "#94a6be"};
+
+  ${CardName} {
+    padding-top: 2px;
+    text-align: center;
+    justify-content: center;
+    font-size: 14px;
+    color: "#ffffff";
+  }
+  margin-right: 7px;
+`;
+
+export const PopBrowseStatus = styled.div`
+  margin-bottom: 11px;
+`;
+export const StatusPsubTtlP = styled.div`
+  padding-bottom: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  color: ${({theme})=> theme.text};
+`;
+
 export const PopBrouwseWrap = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 `;
+
+export const PopBrowseForm = styled.form`
+  max-width: 370px;
+  width: 100%;
+  display: block;
+  margin-bottom: 20px;
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+  }
+`;
+
+export const FormBrowseBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const FormBrowseTitle = styled.label`
+  color: ${({theme})=> theme.text};
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+`;
+
+export const FormBrowseArea = styled.textarea`
+  max-width: 370px;
+  width: 100%;
+  outline: none;
+  padding: 14px;
+  background: #eaeef6;
+  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.14px;
+  margin-top: 14px;
+  height: 200px;
+  color: ${({theme})=> theme.text};
+  background-color: ${({theme})=> theme.body};
+  &::-moz-placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1px;
+    color: #94a6be;
+    letter-spacing: -0.14px;
+  }
+  &::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1px;
+    color: #94a6be;
+    letter-spacing: -0.14px;
+  }
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    height: 37px;
+  }
+`;
+
 
 export const PopBrouwseBtnBrouwse = styled.div`
   display: flex;
