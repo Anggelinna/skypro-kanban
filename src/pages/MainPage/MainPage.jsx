@@ -3,10 +3,10 @@ import { useEffect, useState, useContext } from "react";
 import { Main } from "../../components/Main/Main.jsx";
 import { WrapperStyle } from "../../lib/global.styled.js";
 import { Header } from "../../components/Header/Header.jsx";
-//import {PopNewCard} from '../../components/PopNewCard/PopNewCard.jsx';
 import { Outlet } from "react-router-dom";
 import { getCards } from "../../services/Api.js";
-//import { tasks } from "../../data.js";
+import { statusList } from "../../data.js";
+import { Column } from "../../components/Column/Column.jsx";
 import { UserContext } from "../../context/UserContext.js";
 import { TaskContext } from "../../context/taskContext.js";
 
@@ -35,17 +35,16 @@ export const MainPage = ({ setTheme, theme }) => {
 
     getCards(user.token)
       .then(() => {
-        setErrorMsg("");
-        //setCards(response.tasks)
-        //setIsLoading(false)
-      })
-      .catch((err) => {
-        setErrorMsg(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      //setCards()
+      setIsLoading (false)
+  }).catch((err) => {
+      setErrorMsg(err)
+  }).finally(() =>{
+      setIsLoading(false)
+  })
+
   }, [user, setCards]);
+
 
 
   return (
@@ -53,12 +52,17 @@ export const MainPage = ({ setTheme, theme }) => {
       <Outlet />
 
       <Header addCard={addCard} setTheme={setTheme} theme={theme} />
-      {errorMsg ? (
-        <p>${errorMsg}</p>
-      ) : isLoading ? (
-        "Загрузка..."
-      ) : (
-        <Main errorMsg={errorMsg} cards={cards} />
+      {errorMsg ? ( <p>${errorMsg}</p>
+      ) : isLoading ? ("Загрузка...") : (
+        <Main errorMsg={errorMsg} cards={cards}>
+        {statusList.map((status) => (
+            <Column
+                title={status}
+                key={status}
+                cards={cards.filter((card) => card.status === status)}
+            />
+        ))}
+    </Main>
       )}
     </WrapperStyle>
   );
