@@ -7,8 +7,8 @@ import { Header } from "../../components/Header/Header.jsx";
 import { Outlet } from "react-router-dom";
 import { getCards } from "../../services/Api.js";
 //import { tasks } from "../../data.js";
-import { UserContext } from "../../context/UserContext.jsx";
-import { TaskContext } from "../../context/taskContext.jsx";
+import { UserContext } from "../../context/UserContext.js";
+import { TaskContext } from "../../context/taskContext.js";
 
 export const MainPage = ({ setTheme, theme }) => {
   const [cards, setCards] = useContext(TaskContext);

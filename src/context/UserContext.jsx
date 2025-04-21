@@ -1,8 +1,8 @@
-import { useState, createContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { routesPath } from '../lib/routesPath';
 
-export const UserContext = createContext(null);
+//export const UserContext = createContext(null);
 
 function getUserLocalStorage() {
     try {

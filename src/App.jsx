@@ -10,8 +10,8 @@ import { GlobalStyle } from "./lib/global.styled.js";
 import { ThemeProvider } from "styled-components";
 import { dark, light } from "./theme";
 import { AppRoutes } from "./AppRoutes.jsx";
-import { UserProvider } from "./context/UseContext.jsx";
-import { TaskProvider } from "./context/taskContext.js";
+import { UserProvider } from "./context/UserContext.jsx";
+import { TaskProvider } from "./context/taskContext.jsx";
 
 function App() {
   const [theme, setTheme] = useState(true);
