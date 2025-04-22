@@ -1,19 +1,20 @@
 import { Calendar } from "../Calendar/Calendar";
 import { routesPath } from "../../lib/routesPath.js";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-//import { UserContext } from "../../context/UserContext.js";
-//import { TaskContext } from "../../context/taskContext.js";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext.js";
+import { TaskContext } from "../../context/taskContext.js";
 import * as S from "./PopNewCard.styled.js";
+import { postTodo } from "../../services/Api.js";
 
 export const PopNewCard = () => {
 
-  //const {user} = useContext(UserContext)
-  //const { setCards } = useContext(TaskContext)
-  //const navigate = useNavigate()
-  //const [error, setError] = useState('')
+  const {user} = useContext(UserContext)
+  const { setCards } = useContext(TaskContext)
+  const navigate = useNavigate()
+  const [error, setError] = useState('')
 
-
+  const [date] = useState(new Date)
 
   const [inputValue, setInputValue] = useState({
     title: '',
@@ -23,10 +24,39 @@ export const PopNewCard = () => {
   })
   
 
+  const OnAddNewCard = () => {
+    setError('')
+    const title = !inputValue.title ? 'Новая задача' : inputValue.title
+    const theme = !inputValue.theme ? 'Research' : inputValue.theme
+    const status = !inputValue.status ? 'Без статуса' : inputValue.status
+    const newCard = {
+      description: inputValue.description,
+      title,
+      theme,
+      status,
+      date,
+    }
+
+    if (!inputValue.description) {
+      return setError('Заполните описание')
+    }
+    postTodo({
+      task:newCard,
+      token: user.token
+    }).then((responce)=>{
+      console.log(responce)
+      setCards(responce.tasks)
+      navigate(routesPath.MAIN)
+    }).catch((err)=>{
+      setError(err.message)
+    })
+  }
+
   const onChangeInput = (e) => {
     const {value, name} = e.target
     setInputValue({...inputValue, [name]: value})
   }
+
 
   return (
     <S.PopNewCard id="popNewCard">
@@ -99,8 +129,8 @@ export const PopNewCard = () => {
 
                   </S.PopNewCardCategoriesTheme>
                 </S.PopNewCardCategories>
-             
-                <button className="form-new__create _hover01" id="btnCreate">
+                {error && error}
+                <button onClick={OnAddNewCard} className="form-new__create _hover01" id="btnCreate">
                   Создать задачу
                 </button>
               </S.PopNewCardContent>
@@ -108,3 +138,5 @@ export const PopNewCard = () => {
           </S.PopNewCardContainer>
         </S.PopNewCard>              
 )}
+
+export default PopNewCard;

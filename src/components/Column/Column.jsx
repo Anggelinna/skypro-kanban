@@ -1,14 +1,14 @@
 import { Card } from "../Card/Card";
 import * as S from "./Column.styled";
 
-export const Column = ({ title, cards }) => {
+export const Column = ({ title, tasks }) => {
     return (
         <S.MainColumn>
 			<S.ColumnTitle>
 				<p>{title}</p>
 			</S.ColumnTitle>
 			<S.Cards>
-				{cards.map((card) => (
+				{tasks.map((card) => (
 					<Card 
 						key={card.id} 
 						title={card.title} 

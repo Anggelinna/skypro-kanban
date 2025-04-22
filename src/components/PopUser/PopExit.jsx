@@ -1,5 +1,4 @@
 import { routesPath } from "../../lib/routesPath.js";
-
 import { Link } from "react-router-dom";
 import * as S from "./PopExit.styled.js";
 
