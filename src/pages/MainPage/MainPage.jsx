@@ -19,18 +19,18 @@ export const MainPage = ({ setTheme, theme }) => {
     const {user} = useContext(UserContext);
 
     useEffect (() => {
-        setIsLoading (true)
+      setIsLoading (true)
 
-        getCards(user.token)
-        .then(() => {
-        //setCards()
-        }).catch((err) => {
-            setErrorMsg(err)
-        }).finally(() =>{
-            setIsLoading(false)
-        })
+      getCards(user.token).then((response) =>{
+          setCards(response.tasks)
+          setIsLoading (false)
+      }).catch((err) => {
+          setErrorMsg(err)
+      }).finally(() =>{
+          setIsLoading(false)
+      })
 
-    }, [user, setCards]);
+  }, [user, setCards]);
 
 
   return (
