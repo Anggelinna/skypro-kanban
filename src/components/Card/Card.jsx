@@ -2,13 +2,13 @@ import * as S from "./Card.styled.js"
 import { Link } from "react-router-dom";
 import { themeColor } from "../../lib/global.styled.js";
 
-export const Card = ({theme, id, title, date}) => {  
+export const Card = ({topic, id, title, date}) => {  
 	return (
 	  <S.CardsItem>
 		<S.Card>
 		  <S.CardGroup>
-			<S.CardTheme $color={themeColor(theme)}>
-			  <S.CardName>{theme}</S.CardName> 
+			<S.CardTheme $color={themeColor(topic)}>
+			  <S.CardName>{topic}</S.CardName> 
 			</S.CardTheme>
       <Link to = {`/card/${id}`} >
             <S.CardBtn>

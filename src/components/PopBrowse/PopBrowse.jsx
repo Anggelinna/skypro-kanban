@@ -1,79 +1,222 @@
-import { Link, useParams } from "react-router-dom";
 
 import { routesPath } from "../../lib/routesPath.js";
 import * as S from "./PopBrowse.styled.js"
+import { Link, useParams, useNavigate, Navigate } from "react-router-dom";
+import { useState } from "react";
+import { useUser } from "../../hooks/useUser.jsx";
+import { useTask } from "../../hooks/useTask.jsx";
+import { CardName } from "../Card/Card.styled.js";
+import { themeColor } from "../../lib/global.styled.js";
+import { Calendar } from "../Calendar/Calendar.jsx";
+import { deleteTodo, changeTodo } from "../../services/Api.js";
 
 export const PopBrowse = () => {
-  const { id } = useParams();
+  const { cardId } = useParams();
+  const { user } = useUser();
+  const { cards, setCards } = useTask();
+  const { navigate } = useNavigate();
+
+  const [isEdited, setIsEdited] = useState(false);
+  let openedCard = cards.find((card) => card._id === cardId);
+
+  const [selectedDate] = useState(openedCard?.date);
+
+  const [editCard, setEditCard] = useState({
+    title: openedCard?.title,
+    description: openedCard?.description,
+    topic: openedCard?.topic,
+    status: openedCard?.status,
+    date: openedCard?.date,
+  });
+  console.log(editCard);
+
+  const deleteCard = () => {
+    deleteTodo({ token: user.token, id: cardId })
+      .then((newCard) => {
+        setCards(newCard.tasks);
+        navigate(routesPath.MAIN);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error);
+      });
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const taskData = {
+      ...editCard,
+      date: selectedDate,
+    };
+    console.log(taskData);
+    changeTodo({ token: user.token, id: cardId, taskData: taskData })
+      .then((newCard) => {
+        console.log(newCard)
+        setCards(newCard.tasks);
+        navigate(routesPath.MAIN);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error);
+      });
+  };
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setEditCard({
+      ...editCard,
+      [name]: value,
+    });
+  };
+
+  if (!openedCard) {
+    return <Navigate to={routesPath.MAIN} />;
+  }
+
   return (
     <S.PopBrouwseStyled id="popBrowse">
       <S.PopBrouwseContainer>
         <S.PopBrouwseBlock>
           <S.PopBrouwseContent>
             <S.PopBrouwseTopBlock>
-              <S.PopBrouwseTitle>Название задачи: {id}</S.PopBrouwseTitle>
-              <div className="categories__theme theme-top _orange _active-category">
-                <p className="_orange">Web Design</p>
-              </div>
+              <S.PopBrouwseTitle>Название задачи: {openedCard.title}</S.PopBrouwseTitle>
+              <S.PopBroweColor $color={themeColor[openedCard.topic]}>
+                <CardName $color={themeColor[openedCard.topic]}>
+                  {openedCard.topic}
+                </CardName>
+              </S.PopBroweColor>
             </S.PopBrouwseTopBlock>
-            <div className="pop-browse__status status">
-              <p className="status__p subttl">Статус</p>
-              <div className="status__themes">
-                <div className="status__theme _hide">
-                  <p>Без статуса</p>
-                </div>
-                <div className="status__theme _gray">
-                  <p className="_gray">Нужно сделать</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>В работе</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Тестирование</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Готово</p>
-                </div>
-              </div>
-            </div>
+            <S.PopBrowseStatus>
+              <S.StatusPsubTtlP>Статус</S.StatusPsubTtlP>
+              {!isEdited && <S.StatusThemeLabel_1>{ editCard.status}</S.StatusThemeLabel_1>}
+                {isEdited && (
+                  <S.StatusThemesDiv>
+                    <S.OpenedCardTheme
+                      type="radio"
+                      checked={editCard.status === "Без статуса"}
+                      id="radio1"
+                      name="status"
+                      value="Без статуса"
+                      onChange={onChangeInput}
+                    />
+                    <S.StatusThemeLabel htmlFor="radio1">Без статуса</S.StatusThemeLabel>
+
+                    <S.OpenedCardTheme
+                      type="radio"
+                      checked={editCard.status === "Нужно сделать"}
+                      id="radio2"
+                      name="status"
+                      value="Нужно сделать"
+                      onChange={onChangeInput}
+                    />
+                    <S.StatusThemeLabel htmlFor="radio2">Нужно сделать</S.StatusThemeLabel>
+
+                    <S.OpenedCardTheme
+                      type="radio"
+                      checked={editCard.status === "В работе"}
+                      id="radio3"
+                      name="status"
+                      value="В работе"
+                      onChange={onChangeInput}
+                    />
+                    <S.StatusThemeLabel htmlFor="radio3">В работе</S.StatusThemeLabel>
+
+                    <S.OpenedCardTheme
+                      type="radio"
+                      checked={editCard.status === "Тестирование"}
+                      id="radio4"
+                      name="status"
+                      value="Тестирование"
+                      onChange={onChangeInput}
+                    />
+                    <S.StatusThemeLabel htmlFor="radio4">Тестирование</S.StatusThemeLabel>
+
+                    <S.OpenedCardTheme
+                      type="radio"
+                      checked={editCard.status === "Готово"}
+                      id="radio5"
+                      name="status"
+                      value="Готово"
+                      onChange={onChangeInput}
+                    />
+                    <S.StatusThemeLabel htmlFor="radio5">Готово</S.StatusThemeLabel>
+                  </S.StatusThemesDiv>
+                )}
+            </S.PopBrowseStatus>
             <S.PopBrouwseWrap>
-              <form
-                className="pop-browse__form form-browse"
-                id="formBrowseCard"
-                action="#"
-              >
-                <div className="form-browse__block">
-                  <label htmlFor="textArea01" className="subttl">
+              <S.PopBrowseForm id="formBrowseCard" action="#">
+                <S.FormBrowseBlock>
+                  <S.FormBrowseTitle htmlFor="textArea01">
                     Описание задачи
-                  </label>
-                  <textarea
-                    className="form-browse__area"
-                    name="text"
-                    id="textArea01"
-                    readOnly=""
-                    placeholder="Введите описание задачи..."
-                    defaultValue={""}
-                  />
-                </div>
-              </form>
+                  </S.FormBrowseTitle>
+                  {!isEdited && (
+                    <S.FormBrowseArea
+                      onChange={onChangeInput}
+                      name="description"
+                      id="textArea01"
+                      readOnly=""
+                      placeholder="Введите описание задачи..."
+                      defaultValue={openedCard.description}
+                      disabled={true}
+                    />
+                  )}
+                  {isEdited && (
+                    <S.FormBrowseArea
+                      onChange={onChangeInput}
+                      name="description"
+                      id="textArea01"
+                      readOnly=""
+                      placeholder="Введите описание задачи..."
+                      defaultValue={openedCard.description}
+                      disabled={false}
+                    />
+                  )}
+                </S.FormBrowseBlock>
+              </S.PopBrowseForm>
+              <Calendar />
+
             </S.PopBrouwseWrap>
-            <S.PopBrouwseBtnBrouwse>
-              <div className="btn-group">
-                <Link to="#"><S.BtnBor>Редактировать задачу</S.BtnBor></Link>
-                <Link to="#"><S.BtnBor>Удалить задачу</S.BtnBor></Link>
-              </div>
-              <S.BtnBg>
-                <Link to={routesPath.MAIN}>Закрыть</Link>
-              </S.BtnBg>
-            </S.PopBrouwseBtnBrouwse>
-            <S.PopBrowseBtnEdit>
-              <S.BtnGroup>
-                <Link to="#"><S.BtnBg>Сохранить</S.BtnBg></Link>
-                <Link to="#"><S.BtnBor>Отменить</S.BtnBor></Link>
-                <Link to="#"><S.BtnBor id="btnDelete">Удалить задачу</S.BtnBor></Link>
-              </S.BtnGroup>
-              <Link to="#"><S.BtnBg>Закрыть</S.BtnBg></Link>
-            </S.PopBrowseBtnEdit>
+            {!isEdited && (<S.PopBrowseButtonBrowse>
+              <S.ButtonGroup>
+                <S.ButtonChengeDelete
+                onClick={() => {
+                      setIsEdited(!isEdited);
+                    }}>
+                  Редактировать задачу
+                </S.ButtonChengeDelete>
+                <S.ButtonChengeDelete onClick={deleteCard}>
+                Удалить задачу
+                </S.ButtonChengeDelete>
+              </S.ButtonGroup>
+              <S.LinkClose to={routesPath.MAIN}>
+                <S.ButtonClose>Закрыть</S.ButtonClose>
+              </S.LinkClose>
+            </S.PopBrowseButtonBrowse>)}
+            {isEdited && (<S.PopBrowseButtonBrowse>
+              <S.ButtonGroup>
+                <S.ButtonChengeDelete
+                  onClick={handleFormSubmit}
+                >
+                  Сохранить
+                </S.ButtonChengeDelete>
+                <S.LinkClose to={routesPath.MAIN}>
+                <S.ButtonClose>Закрыть</S.ButtonClose>
+              </S.LinkClose>
+                <S.ButtonChengeDelete
+                  onClick={() => {
+                    setIsEdited(!isEdited);
+                  }}
+                >
+                  Отменить
+                </S.ButtonChengeDelete>
+
+                <S.ButtonChengeDelete
+                  onClick={deleteCard}
+                >
+                  Удалить задачу
+                </S.ButtonChengeDelete>
+              </S.ButtonGroup>
+
+            </S.PopBrowseButtonBrowse>)}
           </S.PopBrouwseContent>
         </S.PopBrouwseBlock>
       </S.PopBrouwseContainer>

@@ -18,7 +18,7 @@ export const PopNewCard = () => {
 
   const [inputValue, setInputValue] = useState({
     title: '',
-    theme: '',
+    topic: '',
     status: '',
     description:'',
   })
@@ -27,12 +27,12 @@ export const PopNewCard = () => {
   const OnAddNewCard = () => {
     setError('')
     const title = !inputValue.title ? 'Новая задача' : inputValue.title
-    const theme = !inputValue.theme ? 'Research' : inputValue.theme
+    const topic = !inputValue.topic ? 'Research' : inputValue.topic
     const status = !inputValue.status ? 'Без статуса' : inputValue.status
     const newCard = {
       description: inputValue.description,
       title,
-      theme,
+      topic,
       status,
       date,
     }
@@ -103,7 +103,7 @@ export const PopNewCard = () => {
                     <S.InputRadio
                       type="radio"
                       id="radio1"
-                      name="theme"
+                      name="topic"
                       value="Web Design"
                       onChange={onChangeInput}
                     />
@@ -112,7 +112,7 @@ export const PopNewCard = () => {
                     <S.InputRadio
                       type="radio"
                       id="radio2"
-                      name="theme"
+                      name="topic"
                       value="Research"
                       onChange={onChangeInput}
                     />
@@ -121,7 +121,7 @@ export const PopNewCard = () => {
                     <S.InputRadio
                       type="radio"
                       id="radio3"
-                      name="theme"
+                      name="topic"
                       value="Copywriting"
                       onChange={onChangeInput}
                     />
