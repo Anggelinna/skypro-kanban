@@ -22,8 +22,6 @@ export const LoginPage = () => {
     setInputValue({...inputValue, [name]: value})
   }
 
-
-
   const loginHandler = (e) => {
     e.preventDefault()
     const {login, password} = inputValue; //пустые поля
@@ -37,7 +35,6 @@ export const LoginPage = () => {
       setErrorMessage(err.message)
     })
   }
-
 
     return (
       <>

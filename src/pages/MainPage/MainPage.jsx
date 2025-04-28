@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-//import { format } from "date-fns";
 import { Main } from "../../components/Main/Main.jsx";
 import { WrapperStyle } from "../../lib/global.styled.js";
 import { Header } from "../../components/Header/Header.jsx";
@@ -31,8 +30,6 @@ export const MainPage = ({setTheme, theme }) => {
       })
 
   }, [user, setCards]);
-
-
 
   return (
       <WrapperStyle>

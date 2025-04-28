@@ -8,5 +8,4 @@ export const PrivateRoute = () => {
 
   return user ? <Outlet /> : <Navigate to={routesPath.LOGIN} />;
 
-  // return user ? <Outlet /> : <Navigate to = {routesPath.LOGIN} />;
 };

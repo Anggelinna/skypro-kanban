@@ -1,7 +1,5 @@
 import * as S from "./Main.styled.js";
 
-
-
 export const Main = ({ children }) => {
 	return (
 	  <S.StyleMain>
