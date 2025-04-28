@@ -2,27 +2,31 @@
 //import viteLogo from "/vite.svg";
 //import { useEffect, useState } from 'react';
 import "./App.css";
-import { useState } from 'react';
+import { useState } from "react";
 //import { Header } from "./components/Header/Header";
 //import { Main } from "./components/Main/Main";
 //import { tasks } from './data';
-import { GlobalStyle } from './lib/global.styled.js';
-import { ThemeProvider } from 'styled-components';
-import { dark, light } from './theme';
-import { AppRoutes } from './AppRoutes.jsx';
-
+import { GlobalStyle } from "./lib/global.styled.js";
+import { ThemeProvider } from "styled-components";
+import { dark, light } from "./theme";
+import { AppRoutes } from "./AppRoutes.jsx";
+import { UserProvider } from "./context/UserContext.jsx";
+import { TaskProvider } from "./context/taskContext.jsx";
 
 function App() {
   const [theme, setTheme] = useState(true);
-  
+
   return (
-    <ThemeProvider theme={theme === "light" ? light : dark}>
-      <GlobalStyle/>
+    <TaskProvider>
+      <UserProvider>
+        <ThemeProvider theme={theme === "light" ? light : dark}>
+          <GlobalStyle />
 
-        <AppRoutes setTheme={setTheme} theme={theme}/>
-
-      </ThemeProvider>
-  )
+          <AppRoutes setTheme={setTheme} theme={theme} />
+        </ThemeProvider>
+      </UserProvider>
+    </TaskProvider>
+  );
 }
 
 export default App;
