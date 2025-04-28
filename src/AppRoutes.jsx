@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-//import { useState } from 'react';
 import { routesPath } from './lib/routesPath.js'
 
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute.jsx';
@@ -15,20 +14,19 @@ import {PopNewCard} from './components//PopNewCard/PopNewCard.jsx';
 
 export const AppRoutes = ({setTheme, theme}) => {
 
-    return (
-        <Routes>
-          <Route element={<PrivateRoute/>}>
-            <Route 
-            path={routesPath.MAIN} element={<MainPage setTheme={setTheme} theme={theme} />}>
-              <Route path={routesPath.CARD_ID} element={<PopBrowsePage />} />
-              <Route path={routesPath.NEW_CARD} element={<PopNewCard />} />
-              <Route path={routesPath.EXIT} element={<ExitPage/>} />
-            </Route>
+  return (
+      <Routes>
+        <Route element={<PrivateRoute/>}>
+          <Route 
+          path={routesPath.MAIN} element={<MainPage setTheme={setTheme} theme={theme} />}>
+            <Route path={routesPath.CARD_ID} element={<PopBrowsePage />} />
+            <Route path={routesPath.NEW_CARD} element={<PopNewCard />} />
+            <Route path={routesPath.EXIT} element={<ExitPage/>} />
           </Route>
-          <Route path={routesPath.LOGIN} element={<LoginPage/>} />
-          <Route path={routesPath.REGISTER} element={<RegisterPage />} />
-          <Route path={routesPath.NOT_FOUND} element={<NotFound />} />
-        </Routes>
-      )
-    };
-//export default AppRoutes;
+        </Route>
+        <Route path={routesPath.LOGIN} element={<LoginPage/>} />
+        <Route path={routesPath.REGISTER} element={<RegisterPage />} />
+        <Route path={routesPath.NOT_FOUND} element={<NotFound />} />
+      </Routes>
+    )
+  };

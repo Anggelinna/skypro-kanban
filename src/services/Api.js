@@ -1,4 +1,3 @@
-
 const userHost = "https://wedev-api.sky.pro/api/user";
 const host = "https://wedev-api.sky.pro/api/kanban";
 
@@ -59,7 +58,7 @@ export async function postTodo({token, task}) {
   
 
   //delete task 
-  export async function deleteTodo({ taskData, id, token }) {
+  export async function deleteTodo({ id, token, taskData }) {
     const response = await fetch(host + `/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -137,5 +136,5 @@ export const register = ({ name, login, password }) => {
       }
       return response.json();
     });
-  }
+}
   

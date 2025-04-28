@@ -10,15 +10,15 @@ import { Column } from "../../components/Column/Column.jsx";
 import { UserContext } from "../../context/UserContext.js";
 import { TaskContext } from "../../context/taskContext.js";
 
-export const MainPage = ({ setTheme, theme }) => {
+export const MainPage = ({setTheme, theme }) => {
   const {cards, setCards} = useContext(TaskContext);
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-    const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-    const {user} = useContext(UserContext);
+  const {user} = useContext(UserContext);
 
-    useEffect (() => {
+  useEffect (() => {
       setIsLoading (true)
 
       getCards(user.token).then((response) =>{
@@ -33,23 +33,27 @@ export const MainPage = ({ setTheme, theme }) => {
   }, [user, setCards]);
 
 
-  return (
-    <WrapperStyle>
-      <Outlet />
 
-      <Header setTheme={setTheme} theme={theme} />
-      {errorMsg ? ( <p>${errorMsg}</p>
-      ) : isLoading ? ("Загрузка...") : (
-        <Main errorMsg={errorMsg} cards={cards}>
-        {statusList.map((status) => (
-            <Column
-                title={status}
-                key={status}
-                tasks={cards.filter((card) => card.status === status)}
-            />
-        ))}
-    </Main>
-      )}
-    </WrapperStyle>
-  );
-};
+  return (
+      <WrapperStyle>
+          <Outlet />
+          <Header
+              setTheme={setTheme}
+              theme={theme}
+          />
+          {errorMsg ? <p>${errorMsg}</p> : (
+              isLoading ? ("Загрузка...") : (
+                  <Main errorMsg={errorMsg} cards={cards}>
+                      {statusList.map((status) => (
+                          <Column
+                              title={status}
+                              key={status}
+                              tasks={cards.filter((card) => card.status === status)}
+                          />
+                      ))}
+                  </Main>
+              )
+          )}
+      </WrapperStyle>
+  )
+}

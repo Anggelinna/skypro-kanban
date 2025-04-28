@@ -1,10 +1,6 @@
-//import reactLogo from "./assets/react.svg";
-//import viteLogo from "/vite.svg";
-//import { useEffect, useState } from 'react';
 import "./App.css";
 import { useState } from "react";
-//import { Header } from "./components/Header/Header";
-//import { Main } from "./components/Main/Main";
+
 //import { tasks } from './data';
 import { GlobalStyle } from "./lib/global.styled.js";
 import { ThemeProvider } from "styled-components";
