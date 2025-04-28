@@ -4,7 +4,6 @@ import { ru } from "date-fns/locale";
 
 export const Calendar = () => {
 
-
   const [date, setDate] = useState(new Date)
   const currentDate = date.toLocaleDateString("ru-US")
 
