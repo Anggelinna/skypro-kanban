@@ -1,32 +1,34 @@
-import { Route, Routes } from 'react-router-dom';
-import { routesPath } from './lib/routesPath.js'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage/MainPage";
+import AuthForm from "./pages/AuthForm/AuthForm";
+import NotFound from "./pages/NotFound/NotFound";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import { useAuth } from "./providers/AuthProvider";
+import Card from "./pages/Card/Card";
+import Exit from "./pages/Exit/Exit";
+import NewCard from "./pages/NewCard/NewCard";
 
-import { PrivateRoute } from './components/PrivateRoute/PrivateRoute.jsx';
-import { MainPage } from "./pages/MainPage/MainPage.jsx";
-import { ExitPage } from './pages/ExitPage/ExitPage.jsx';
-import { NotFound } from './pages/NotFoundPage/NotFound.jsx';
-import { LoginPage } from './pages/LoginPage/LoginPage.jsx';
-import { RegisterPage } from './pages/RegisterPage/RegisterPage.jsx';
-import { PopBrowsePage } from './pages/PopBrowsePage/PopBrowsePage.jsx';
-
-import {PopNewCard} from './components//PopNewCard/PopNewCard.jsx';
-
-
-export const AppRoutes = ({setTheme, theme}) => {
+const AppRoutes = () => {
+  const { isAuth } = useAuth();
 
   return (
+    <BrowserRouter>
       <Routes>
-        <Route element={<PrivateRoute/>}>
-          <Route 
-          path={routesPath.MAIN} element={<MainPage setTheme={setTheme} theme={theme} />}>
-            <Route path={routesPath.CARD_ID} element={<PopBrowsePage />} />
-            <Route path={routesPath.NEW_CARD} element={<PopNewCard />} />
-            <Route path={routesPath.EXIT} element={<ExitPage/>} />
+        <Route element={<PrivateRoute isAuth={isAuth} navigateTo="/login" />}>
+          <Route path="/" element={<MainPage />}>
+            <Route path="exit" element={<Exit />} />
+            <Route path="newcard" element={<NewCard />} />
+            <Route path="card/:id" element={<Card />} />
           </Route>
         </Route>
-        <Route path={routesPath.LOGIN} element={<LoginPage/>} />
-        <Route path={routesPath.REGISTER} element={<RegisterPage />} />
-        <Route path={routesPath.NOT_FOUND} element={<NotFound />} />
+        <Route element={<PrivateRoute isAuth={!isAuth} navigateTo="/" />}>
+          <Route path="/login" element={<AuthForm />} />
+          <Route path="/register" element={<AuthForm isSignUp={true} />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    )
+    </BrowserRouter>
+  );
 };
+
+export default AppRoutes;

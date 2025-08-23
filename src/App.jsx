@@ -1,26 +1,20 @@
 import "./App.css";
-import { useState } from "react";
-
-import { GlobalStyle } from "./lib/global.styled.js";
-import { ThemeProvider } from "styled-components";
-import { dark, light } from "./theme";
-import { AppRoutes } from "./AppRoutes.jsx";
-import { UserProvider } from "./context/UserContext.jsx";
-import { TaskProvider } from "./context/taskContext.jsx";
+import { GlobalStyles } from "./globalStyles";
+import AppRoutes from "./AppRoutes";
+import { AuthProvider } from "./providers/AuthProvider";
+import { TaskProvider } from "./providers/TaskProvider";
+import { ThemesProvider } from "./providers/ThemesProvider";
 
 function App() {
-  const [theme, setTheme] = useState(true);
-
   return (
-    <TaskProvider>
-      <UserProvider>
-        <ThemeProvider theme={theme === "light" ? light : dark}>
-          <GlobalStyle />
-
-          <AppRoutes setTheme={setTheme} theme={theme} />
-        </ThemeProvider>
-      </UserProvider>
-    </TaskProvider>
+    <ThemesProvider>
+      <AuthProvider>
+        <TaskProvider>
+          <GlobalStyles />
+          <AppRoutes />
+        </TaskProvider>
+      </AuthProvider>
+    </ThemesProvider>
   );
 }
 

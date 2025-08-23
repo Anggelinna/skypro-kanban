@@ -1,39 +1,131 @@
-export const statusList = ["Без статуса", "Нужно сделать", "В работе", "Тестирование", "Готово"];
+import { statusList } from "./enums";
+import { themeList } from "./enums";
 
-export const tasks = [
-    {
-        id: 1,
-        date: "30.1.2023",
-        theme: "Web Design",
-        title: "Сходить в кино",
-        status: "Без статуса"
-    },
-    {
-        id: 2,
-        date: "20.2.2024",
-        theme: "Copywriting",
-        title: "Сдать домашку",
-        status: "Нужно сделать"
-    },
-    {
-        id: 3,
-        date: "30.1.2025",
-        theme: "Web Design",
-        title: "Название задачи",
-        status: "В работе"
-    },
-    {
-        id: 4,
-        date: "12.1.2023",
-        theme: "Research",
-        title: "Уехать на выходных",
-        status: "Тестирование"
-    },
-    {
-        id: 5,
-        date: "7.8.2023",
-        theme: "Research",
-        title: "Встреча с подругой",
-        status: "Готово"
-    },
-]
+export const cartList = [
+  {
+    id: 1,
+    theme: themeList.webDesign,
+    title: "Сделать задачу RS-123",
+    date: "30.10.23",
+    status: statusList.needToDo,
+  },
+  {
+    id: 2,
+    theme: themeList.research,
+    title: "Сделать задачу RS-124",
+    date: "10.10.23",
+    status: statusList.done,
+  },
+  {
+    id: 3,
+    theme: themeList.webDesign,
+    title: "Сделать задачу RS-125",
+    date: "20.10.23",
+    status: statusList.inProgress,
+  },
+  {
+    id: 4,
+    theme: themeList.copywriting,
+    title: "Сделать задачу RS-126",
+    date: "30.10.23",
+    status: statusList.noStatus,
+  },
+  {
+    id: 5,
+    theme: themeList.webDesign,
+    title: "Сделать задачу RS-127",
+    date: "30.10.23",
+    status: statusList.needToDo,
+  },
+  {
+    id: 6,
+    theme: themeList.research,
+    title: "Сделать задачу RS-128",
+    date: "10.10.23",
+    status: statusList.done,
+  },
+  {
+    id: 7,
+    theme: themeList.research,
+    title: "Сделать задачу RS-129",
+    date: "20.10.23",
+    status: statusList.inProgress,
+  },
+  {
+    id: 8,
+    theme: themeList.copywriting,
+    title: "Сделать задачу RS-130",
+    date: "30.10.23",
+    status: statusList.noStatus,
+  },
+  {
+    id: 9,
+    theme: themeList.copywriting,
+    title: "Сделать задачу RS-131",
+    date: "30.10.23",
+    status: statusList.needToDo,
+  },
+  {
+    id: 10,
+    theme: themeList.research,
+    title: "Сделать задачу RS-132",
+    date: "10.10.23",
+    status: statusList.done,
+  },
+  {
+    id: 11,
+    theme: themeList.webDesign,
+    title: "Сделать задачу RS-133",
+    date: "20.10.23",
+    status: statusList.inProgress,
+  },
+  {
+    id: 12,
+    theme: themeList.copywriting,
+    title: "Сделать задачу RS-134",
+    date: "30.10.23",
+    status: statusList.noStatus,
+  },
+  {
+    id: 13,
+    theme: themeList.research,
+    title: "Сделать задачу RS-135",
+    date: "30.10.23",
+    status: statusList.needToDo,
+  },
+  {
+    id: 14,
+    theme: themeList.webDesign,
+    title: "Сделать задачу RS-136",
+    date: "10.10.23",
+    status: statusList.done,
+  },
+  {
+    id: 15,
+    theme: themeList.webDesign,
+    title: "Сделать задачу RS-137",
+    date: "20.10.23",
+    status: statusList.inProgress,
+  },
+  {
+    id: 16,
+    theme: themeList.copywriting,
+    title: "Сделать задачу RS-138",
+    date: "30.10.23",
+    status: statusList.test,
+  },
+  {
+    id: 17,
+    theme: themeList.webDesign,
+    title: "Сделать задачу RS-139",
+    date: "30.10.23",
+    status: statusList.test,
+  },
+  {
+    id: 18,
+    theme: themeList.research,
+    title: "Сделать задачу RS-140",
+    date: "10.10.23",
+    status: statusList.test,
+  },
+];

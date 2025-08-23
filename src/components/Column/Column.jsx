@@ -1,23 +1,28 @@
-import { Card } from "../Card/Card";
-import * as S from "./Column.styled";
+import PropTypes from "prop-types";
+import * as S from "./styledComponents";
+import { useDroppable } from "@dnd-kit/core";
 
-export const Column = ({ title, tasks }) => {
-	return (
-		<S.MainColumn>
-		<S.ColumnTitle>
-		  <p>{title}</p>
-		</S.ColumnTitle>
-		<S.StyledCard>
-		  {tasks.map((card) =>
-			  <Card
-				topic={card.topic}
-				title={card.title}
-				date={card.date}
-				key={card._id}
-				id={card._id}
-			  />)
-		  }
-		</S.StyledCard>
-	  </S.MainColumn>
-	)
-}
+const Column = ({ title, children }) => {
+  const { setNodeRef } = useDroppable({
+    id: title,
+  });
+
+  return (
+    <S.Column ref={setNodeRef}>
+      <S.ColumnTitle>
+        <S.ColumnTitleText>{title}</S.ColumnTitleText>
+      </S.ColumnTitle>
+      <S.ColumnContent>
+        <S.Cards>{children}</S.Cards>
+      </S.ColumnContent>
+    </S.Column>
+  );
+};
+
+Column.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  id: PropTypes.string.isRequired,
+};
+
+export default Column;
