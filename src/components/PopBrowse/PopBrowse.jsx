@@ -6,13 +6,13 @@ import {
   getKanbanTask,
   deleteKanbanTask,
   changeKanbanTask,
-} from "../../../services/api/tasks";
+} from "../../services/api/tasks";
 import "react-day-picker/style.css";
-import { color } from "../../../services/utils/color";
-import { useTask } from "../../../providers/TaskProvider";
+import { color } from "../../services/utils/color";
+import { useTask } from "../../providers/TaskProvider";
 import { useNavigate } from "react-router-dom";
-import { Loader } from "../../Loader/Loader";
-import { statusList } from "../../../enums";
+import { Loader } from "../Loader/Loader";
+import { statusList } from "../../enums";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ru } from "date-fns/locale";

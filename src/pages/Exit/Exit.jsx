@@ -1,4 +1,4 @@
-import PopExit from "../../components/popups/PopExit/PopExit";
+import PopExit from "../../components/PopExit/PopExit";
 
 const Exit = () => {
   return <PopExit />;

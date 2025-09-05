@@ -1,6 +1,6 @@
 import * as S from "./styledComponents";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../providers/AuthProvider";
+import { useAuth } from "../../providers/AuthProvider";
 
 const PopExit = () => {
   const navigate = useNavigate();

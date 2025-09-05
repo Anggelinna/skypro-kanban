@@ -1,11 +1,11 @@
 import { useState } from "react";
 import * as S from "./styledComponents";
 import moment from "moment";
-import { themeList } from "../../../enums";
-import { color } from "../../../services/utils/color";
-import { addKanbanTask } from "../../../services/api/tasks";
+import { themeList } from "../../enums";
+import { color } from "../../services/utils/color";
+import { addKanbanTask } from "../../services/api/tasks";
 import { useNavigate } from "react-router-dom";
-import { useTask } from "../../../providers/TaskProvider";
+import { useTask } from "../../providers/TaskProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ru } from "date-fns/locale";

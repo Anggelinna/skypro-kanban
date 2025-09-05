@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import * as S from "./styledComponents";
-import { useTheme } from "../../../providers/ThemesProvider";
+import { useTheme } from "../../providers/ThemesProvider";
 
 const PopUser = ({ showUserPopupHandler }) => {
   const userWindowRef = useRef(null);
