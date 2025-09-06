@@ -20,7 +20,7 @@ const Header = () => {
           <S.HeaderLogo>
             <S.HeaderLink to="/">
               <S.HeaderLogoImg
-                src={isDark ? "/logo_dark.png" : "/logo.png"}
+                src={isDark ? "/images/logo_dark.png" : "/images/logo.png"}
                 alt="logo"
               />
             </S.HeaderLink>
