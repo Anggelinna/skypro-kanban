@@ -1,225 +1,256 @@
+import { useEffect, useState, useRef } from "react";
+import moment from "moment";
+import * as S from "./styledComponents";
+import { useParams } from "react-router-dom";
+import {
+  getKanbanTask,
+  deleteKanbanTask,
+  changeKanbanTask,
+} from "../../services/api/tasks";
+import "react-day-picker/style.css";
+import { color } from "../../services/utils/color";
+import { useTask } from "../../providers/TaskProvider";
+import { useNavigate } from "react-router-dom";
+import { Loader } from "../Loader/Loader";
+import { statusList } from "../../enums";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ru } from "date-fns/locale";
 
-import { routesPath } from "../../lib/routesPath.js";
-import * as S from "./PopBrowse.styled.js"
-import { Link, useParams, useNavigate, Navigate } from "react-router-dom";
-import { useState } from "react";
-import { useUser } from "../../hooks/useUser.jsx";
-import { useTask } from "../../hooks/useTask.jsx";
-import { CardName } from "../Card/Card.styled.js";
-import { themeColor } from "../../lib/global.styled.js";
-import { Calendar } from "../Calendar/Calendar.jsx";
-import { deleteTodo, changeTodo } from "../../services/Api.js";
-
-export const PopBrowse = () => {
-  const { cardId } = useParams();
-  const { user } = useUser();
-  const { cards, setCards } = useTask();
-  const { navigate } = useNavigate();
-
-  const [isEdited, setIsEdited] = useState(false);
-  let openedCard = cards.find((card) => card._id === cardId);
-
-  const [selectedDate] = useState(openedCard?.date);
-
-  const [editCard, setEditCard] = useState({
-    title: openedCard?.title,
-    description: openedCard?.description,
-    topic: openedCard?.topic,
-    status: openedCard?.status,
-    date: openedCard?.date,
+const PopBrowse = () => {
+  const [task, setTask] = useState({
+    status: "",
+    date: "",
+    description: "",
   });
-  console.log(editCard);
 
-  const deleteCard = () => {
-    deleteTodo({ token: user.token, id: cardId })
-      .then((newCard) => {
-        setCards(newCard.tasks);
-        navigate(routesPath.MAIN);
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(error);
-      });
-  };
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    const taskData = {
-      ...editCard,
-      date: selectedDate,
+  const [loading, setLoading] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const { id: taskId } = useParams();
+  const { setTasks } = useTask();
+  const navigate = useNavigate();
+  const taskState = useRef();
+
+  useEffect(() => {
+    const fetchTask = async () => {
+      try {
+        const kanbanTask = await getKanbanTask({
+          token: JSON.parse(localStorage.getItem("userInfo")).token,
+          taskId,
+        });
+        setTask(kanbanTask);
+        setCurrentMonth(kanbanTask.date);
+        setLoading(false);
+      } catch (error) {
+        toast.error("Ошибка при получении задачи " + error, {
+          position: "top-right",
+          toastId: "kanbanTask",
+        });
+      }
     };
-    console.log(taskData);
-    changeTodo({ token: user.token, id: cardId, taskData: taskData })
-      .then((newCard) => {
-        console.log(newCard)
-        setCards(newCard.tasks);
-        navigate(routesPath.MAIN);
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(error);
+    fetchTask();
+  }, [taskId]);
+
+  const deleteTaskHandler = () => {
+    const deleteTask = async () => {
+      try {
+        const kanbanTasks = await deleteKanbanTask({
+          token: JSON.parse(localStorage.getItem("userInfo")).token,
+          taskId,
+        });
+        setTasks(kanbanTasks);
+        navigate("/");
+      } catch (error) {
+        toast.error("Ошибка при удалении задачи " + error, {
+          position: "top-right",
+          toastId: "deleteTask",
+        });
+      }
+    };
+    deleteTask();
+  };
+
+  const changeTaskHandler = () => {
+    if (!validateFields()) {
+      return;
+    }
+    const changeTask = async () => {
+      try {
+        const kanbanTasks = await changeKanbanTask({
+          token: JSON.parse(localStorage.getItem("userInfo")).token,
+          task,
+          taskId,
+        });
+        setTasks(kanbanTasks);
+        setIsEdit(false);
+      } catch (error) {
+        toast.error("Ошибка при изменении задачи " + error, {
+          position: "top-right",
+          toastId: "changeTask",
+        });
+      }
+    };
+    changeTask();
+  };
+
+  const editTaskHandler = () => {
+    taskState.current = task;
+    setIsEdit(true);
+  };
+
+  const cancelEditTaskHandler = () => {
+    setTask(taskState.current);
+    setIsEdit(false);
+  };
+
+  const setDataHandler = (attribute, value) => {
+    setTask((prevTask) => ({
+      ...prevTask,
+      [attribute]: value,
+    }));
+  };
+
+  const statusThemesCalc = () => {
+    if (isEdit) {
+      return Object.entries(statusList).map((status) => {
+        return (
+          <S.StatusTheme
+            key={status[1]}
+            $current={status[1] === task.status}
+            onClick={() => {
+              setDataHandler("status", status[1]);
+            }}
+          >
+            <S.StatusThemeText>{status[1]}</S.StatusThemeText>
+          </S.StatusTheme>
+        );
       });
+    } else {
+      return (
+        <S.StatusTheme $current={true}>
+          <S.StatusThemeText>{task.status}</S.StatusThemeText>
+        </S.StatusTheme>
+      );
+    }
   };
 
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setEditCard({
-      ...editCard,
-      [name]: value,
-    });
+  const validateFields = () => {
+    for (const objTask of Object.entries(task)) {
+      if (String(objTask[1] ?? "").trim().length === 0) {
+        toast.error("Необходимо заполнить все поля.", {
+          position: "top-right",
+        });
+        return false;
+      }
+    }
+    return true;
   };
-
-  if (!openedCard) {
-    return <Navigate to={routesPath.MAIN} />;
-  }
 
   return (
-    <S.PopBrouwseStyled id="popBrowse">
-      <S.PopBrouwseContainer>
-        <S.PopBrouwseBlock>
-          <S.PopBrouwseContent>
-            <S.PopBrouwseTopBlock>
-              <S.PopBrouwseTitle>Название задачи: {openedCard.title}</S.PopBrouwseTitle>
-              <S.PopBroweColor $color={themeColor[openedCard.topic]}>
-                <CardName $color={themeColor[openedCard.topic]}>
-                  {openedCard.topic}
-                </CardName>
-              </S.PopBroweColor>
-            </S.PopBrouwseTopBlock>
-            <S.PopBrowseStatus>
-              <S.StatusPsubTtlP>Статус</S.StatusPsubTtlP>
-              {!isEdited && <S.StatusThemeLabel_1>{ editCard.status}</S.StatusThemeLabel_1>}
-                {isEdited && (
-                  <S.StatusThemesDiv>
-                    <S.OpenedCardTheme
-                      type="radio"
-                      checked={editCard.status === "Без статуса"}
-                      id="radio1"
-                      name="status"
-                      value="Без статуса"
-                      onChange={onChangeInput}
-                    />
-                    <S.StatusThemeLabel htmlFor="radio1">Без статуса</S.StatusThemeLabel>
-
-                    <S.OpenedCardTheme
-                      type="radio"
-                      checked={editCard.status === "Нужно сделать"}
-                      id="radio2"
-                      name="status"
-                      value="Нужно сделать"
-                      onChange={onChangeInput}
-                    />
-                    <S.StatusThemeLabel htmlFor="radio2">Нужно сделать</S.StatusThemeLabel>
-
-                    <S.OpenedCardTheme
-                      type="radio"
-                      checked={editCard.status === "В работе"}
-                      id="radio3"
-                      name="status"
-                      value="В работе"
-                      onChange={onChangeInput}
-                    />
-                    <S.StatusThemeLabel htmlFor="radio3">В работе</S.StatusThemeLabel>
-
-                    <S.OpenedCardTheme
-                      type="radio"
-                      checked={editCard.status === "Тестирование"}
-                      id="radio4"
-                      name="status"
-                      value="Тестирование"
-                      onChange={onChangeInput}
-                    />
-                    <S.StatusThemeLabel htmlFor="radio4">Тестирование</S.StatusThemeLabel>
-
-                    <S.OpenedCardTheme
-                      type="radio"
-                      checked={editCard.status === "Готово"}
-                      id="radio5"
-                      name="status"
-                      value="Готово"
-                      onChange={onChangeInput}
-                    />
-                    <S.StatusThemeLabel htmlFor="radio5">Готово</S.StatusThemeLabel>
-                  </S.StatusThemesDiv>
-                )}
-            </S.PopBrowseStatus>
-            <S.PopBrouwseWrap>
-              <S.PopBrowseForm id="formBrowseCard" action="#">
-                <S.FormBrowseBlock>
-                  <S.FormBrowseTitle htmlFor="textArea01">
-                    Описание задачи
-                  </S.FormBrowseTitle>
-                  {!isEdited && (
-                    <S.FormBrowseArea
-                      onChange={onChangeInput}
-                      name="description"
-                      id="textArea01"
-                      readOnly=""
-                      placeholder="Введите описание задачи..."
-                      defaultValue={openedCard.description}
-                      disabled={true}
-                    />
-                  )}
-                  {isEdited && (
-                    <S.FormBrowseArea
-                      onChange={onChangeInput}
-                      name="description"
-                      id="textArea01"
-                      readOnly=""
-                      placeholder="Введите описание задачи..."
-                      defaultValue={openedCard.description}
-                      disabled={false}
-                    />
-                  )}
-                </S.FormBrowseBlock>
-              </S.PopBrowseForm>
-              <Calendar />
-
-            </S.PopBrouwseWrap>
-            {!isEdited && (<S.PopBrowseButtonBrowse>
-              <S.ButtonGroup>
-                <S.ButtonChengeDelete
-                onClick={() => {
-                      setIsEdited(!isEdited);
-                    }}>
-                  Редактировать задачу
-                </S.ButtonChengeDelete>
-                <S.ButtonChengeDelete onClick={deleteCard}>
-                Удалить задачу
-                </S.ButtonChengeDelete>
-              </S.ButtonGroup>
-              <S.LinkClose to={routesPath.MAIN}>
-                <S.ButtonClose>Закрыть</S.ButtonClose>
-              </S.LinkClose>
-            </S.PopBrowseButtonBrowse>)}
-            {isEdited && (<S.PopBrowseButtonBrowse>
-              <S.ButtonGroup>
-                <S.ButtonChengeDelete
-                  onClick={handleFormSubmit}
-                >
-                  Сохранить
-                </S.ButtonChengeDelete>
-                <S.LinkClose to={routesPath.MAIN}>
-                <S.ButtonClose>Закрыть</S.ButtonClose>
-              </S.LinkClose>
-                <S.ButtonChengeDelete
-                  onClick={() => {
-                    setIsEdited(!isEdited);
-                  }}
-                >
-                  Отменить
-                </S.ButtonChengeDelete>
-
-                <S.ButtonChengeDelete
-                  onClick={deleteCard}
-                >
-                  Удалить задачу
-                </S.ButtonChengeDelete>
-              </S.ButtonGroup>
-
-            </S.PopBrowseButtonBrowse>)}
-          </S.PopBrouwseContent>
-        </S.PopBrouwseBlock>
-      </S.PopBrouwseContainer>
-    </S.PopBrouwseStyled>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <ToastContainer />
+          <S.PopBrows>
+            <S.PopBrowsContainer>
+              <S.PopBrowsBlock>
+                <S.PopBrowserContent>
+                  <S.PopBrowsTopBlock>
+                    <S.PopBrowsTtl>{task.title}</S.PopBrowsTtl>
+                    <S.CategoriesTheme
+                      $color={color(task.topic)}
+                      $active={true}
+                    >
+                      <S.CategoriesThemeText $color={color(task.topic)}>
+                        {task.topic}
+                      </S.CategoriesThemeText>
+                    </S.CategoriesTheme>
+                  </S.PopBrowsTopBlock>
+                  <S.PopBroswStatus>
+                    <S.PopBrowsStatusText>Статус</S.PopBrowsStatusText>
+                    <S.StatusThemes>{statusThemesCalc()}</S.StatusThemes>
+                  </S.PopBroswStatus>
+                  <S.PopBrowsWrap>
+                    <S.PopBrowsForm>
+                      <S.PopBrowsFormBlock>
+                        <S.PopBrowsFormLabel>
+                          Описание задачи
+                        </S.PopBrowsFormLabel>
+                        <S.TextArea
+                          name="text"
+                          readOnly={!isEdit}
+                          placeholder="Введите описание задачи..."
+                          value={task.description}
+                          onChange={(text) =>
+                            setDataHandler("description", text.target.value)
+                          }
+                        />
+                      </S.PopBrowsFormBlock>
+                    </S.PopBrowsForm>
+                    <S.PopNewBrowserCalendar>
+                      <S.CalendarTitle>Даты</S.CalendarTitle>
+                      <S.Calendar
+                        disabled={!isEdit}
+                        locale={ru}
+                        mode="single"
+                        selected={task.date}
+                        onSelect={(date) => setDataHandler("date", date)}
+                        month={currentMonth}
+                        onMonthChange={(month) => setCurrentMonth(month)}
+                        footer={
+                          task.date
+                            ? `Срок исполнения: ${moment(task.date).format(
+                                "DD.MM.YYYY"
+                              )}`
+                            : "Выберите дату"
+                        }
+                      />
+                    </S.PopNewBrowserCalendar>
+                  </S.PopBrowsWrap>
+                  <S.ThemeDownCategory>
+                    <S.ThemeDownCategoryText>Категория</S.ThemeDownCategoryText>
+                    <S.CategoriesTheme $color="orange" $active={true}>
+                      <S.CategoriesThemeText $color="orange">
+                        Web Design
+                      </S.CategoriesThemeText>
+                    </S.CategoriesTheme>
+                  </S.ThemeDownCategory>
+                  <S.PopBrowsBtnBrowse>
+                    <S.BtnGroup>
+                      <S.PopBrowsBtnBg
+                        $hide={!isEdit}
+                        onClick={changeTaskHandler}
+                      >
+                        Сохранить
+                      </S.PopBrowsBtnBg>
+                      <S.PopBrowsBtn
+                        $hide={!isEdit}
+                        onClick={cancelEditTaskHandler}
+                      >
+                        Отменить
+                      </S.PopBrowsBtn>
+                      <S.PopBrowsBtn $hide={isEdit} onClick={editTaskHandler}>
+                        Редактировать задачу
+                      </S.PopBrowsBtn>
+                      <S.PopBrowsBtn onClick={deleteTaskHandler}>
+                        Удалить задачу
+                      </S.PopBrowsBtn>
+                    </S.BtnGroup>
+                    <S.PopBrowsBtnBg>
+                      <S.PopBrowsLink to="/">Закрыть</S.PopBrowsLink>
+                    </S.PopBrowsBtnBg>
+                  </S.PopBrowsBtnBrowse>
+                </S.PopBrowserContent>
+              </S.PopBrowsBlock>
+            </S.PopBrowsContainer>
+          </S.PopBrows>
+        </>
+      )}
+    </>
   );
-}
+};
+
+export default PopBrowse;

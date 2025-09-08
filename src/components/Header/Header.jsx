@@ -1,61 +1,53 @@
-import { useState, useContext } from "react";
-import * as S from "./Header.styled.js";
-import { Link, useNavigate } from "react-router-dom";
-import { routesPath } from "../../lib/routesPath.js";
-import { UserContext } from "../../context/UserContext.js";
+import { useState } from "react";
+import PopUser from "../PopUser/PopUser";
+import * as S from "./styledComponents";
+import { useTheme } from "../../providers/ThemesProvider";
 
-export const Header = ({ setTheme, theme }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+const Header = () => {
+  const [showUserPopup, setShowUserPopup] = useState(false);
 
-  const openModal = (e) => {
-    e.preventDefault();
-    setIsOpen((prev) => !prev);
+  const showUserPopupHandler = () => {
+    setShowUserPopup((prev) => !prev);
   };
 
-  const addCard = () => {
-    navigate(routesPath.NEW_CARD);
-  };
-
-  const onTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
+  const { isDark } = useTheme();
+  const user = JSON.parse(localStorage.getItem("userInfo"));
 
   return (
-	<S.Header>
-	<S.Container>
-		<S.HeaderBlock>
-		<S.HeaderLogo className="_show _light">
-			  <a href="" target="_self"><img src={theme === "light" ? "images/logo.png" : "images/logo_dark.png"} alt="logo"/></a>
-		  </S.HeaderLogo>
-		  <S.HeaderLogo className="_dark">
-			  <a href="" target="_self"><img src="images/logo_dark.png" alt="logo"/></a>
-		  </S.HeaderLogo>
-			<S.HeaderNav>
-				<S.HeaderBtnNew id="btnMainNew">
-					<S.HeaderBtnNewLink href="#popNewCard" onClick={addCard}> Создать новую задачу </S.HeaderBtnNewLink>
-				</S.HeaderBtnNew>
-				<S.HeaderUser onClick={openModal}> {user.name} </S.HeaderUser>
-				{isOpen && (
-				  <S.HeaderPopUserSet id="user-set-target">
-						{/* <a href="">x</a> */}
-						<S.HeaderUserSetName>{user.name}</S.HeaderUserSetName>
-						<S.HeaderUserSetMail>{user.login}</S.HeaderUserSetMail>
-						<S.HeaderUserSetTheme>
-						   <p>Темная тема</p>
-							<input onChange={()=>onTheme(!theme)} type="checkbox" className="checkbox" name="checkbox" />
-						</S.HeaderUserSetTheme>
-							<S.HeaderExit>
-								<Link to={routesPath.EXIT}>
-									Выйти
-								</Link>
-							</S.HeaderExit>
-				  </S.HeaderPopUserSet>
-				)}
-			</S.HeaderNav>
-		</S.HeaderBlock>
-		</S.Container>
-</S.Header>
-)
-}
+    <S.Header>
+      <S.HeaderContainer>
+        <S.HeaderBlock>
+          <S.HeaderLogo>
+            <S.HeaderLink to="/">
+              <S.HeaderLogoImg
+                src={isDark ? "/images/logo_dark.png" : "/images/logo.png"}
+                alt="logo"
+              />
+            </S.HeaderLink>
+          </S.HeaderLogo>
+          <S.HeaderNav>
+            <S.HeaderBtnMainNew>
+              <S.HeaderBtnMainNewLink to="/newcard">
+                Создать новую задачу
+              </S.HeaderBtnMainNewLink>
+            </S.HeaderBtnMainNew>
+            <S.HeaderUserBtn
+              onMouseDown={(e) => e.stopPropagation()}
+              onClick={() => showUserPopupHandler()}
+            >
+              {user.name}
+            </S.HeaderUserBtn>
+            {showUserPopup && (
+              <PopUser
+                showUserPopupHandler={showUserPopupHandler}
+                closedFromPopUp
+              />
+            )}
+          </S.HeaderNav>
+        </S.HeaderBlock>
+      </S.HeaderContainer>
+    </S.Header>
+  );
+};
+
+export default Header;

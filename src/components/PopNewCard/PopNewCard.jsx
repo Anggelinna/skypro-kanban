@@ -1,142 +1,156 @@
-import { Calendar } from "../Calendar/Calendar";
-import { routesPath } from "../../lib/routesPath.js";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { UserContext } from "../../context/UserContext.js";
-import { TaskContext } from "../../context/taskContext.js";
-import * as S from "./PopNewCard.styled.js";
-import { postTodo } from "../../services/Api.js";
+import { useState } from "react";
+import * as S from "./styledComponents";
+import moment from "moment";
+import { themeList } from "../../enums";
+import { color } from "../../services/utils/color";
+import { addKanbanTask } from "../../services/api/tasks";
+import { useNavigate } from "react-router-dom";
+import { useTask } from "../../providers/TaskProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ru } from "date-fns/locale";
 
-export const PopNewCard = () => {
+const PopNewCard = () => {
+  const navigate = useNavigate();
+  const { setTasks } = useTask();
 
-  const {user} = useContext(UserContext)
-  const { setCards } = useContext(TaskContext)
-  const navigate = useNavigate()
-  const [error, setError] = useState('')
+  const [task, setTask] = useState({
+    title: "",
+    topic: "",
+    description: "",
+    date: "",
+  });
 
-  const [date] = useState(new Date)
+  const setDataHandler = (attribute, value) => {
+    setTask((prevTask) => ({
+      ...prevTask,
+      [attribute]: value,
+    }));
+  };
 
-  const [inputValue, setInputValue] = useState({
-    title: '',
-    topic: '',
-    status: '',
-    description:'',
-  })
-  
-
-  const OnAddNewCard = () => {
-    setError('')
-    const title = !inputValue.title ? 'Новая задача' : inputValue.title
-    const topic = !inputValue.topic ? 'Research' : inputValue.topic
-    const status = !inputValue.status ? 'Без статуса' : inputValue.status
-    const newCard = {
-      description: inputValue.description,
-      title,
-      topic,
-      status,
-      date,
+  const createNewTask = () => {
+    try {
+      if (!validateFields()) {
+        return;
+      }
+      addKanbanTask({
+        token: JSON.parse(localStorage.getItem("userInfo")).token,
+        task,
+      }).then((data) => {
+        setTasks(data);
+        navigate("/");
+      });
+    } catch (error) {
+      toast.error("Ошибка при создании задачи " + error, {
+        position: "top-right",
+        toastId: "addKanbanTask",
+      });
     }
+  };
 
-    if (!inputValue.description) {
-      return setError('Заполните описание')
+  const validateFields = () => {
+    for (const objTask of Object.entries(task)) {
+      if (String(objTask[1] ?? "").trim().length === 0) {
+        toast.error("Необходимо заполнить все поля.", {
+          position: "top-right",
+        });
+        return false;
+      }
     }
-    postTodo({
-      task:newCard,
-      token: user.token
-    }).then((responce)=>{
-      console.log(responce)
-      setCards(responce.tasks)
-      navigate(routesPath.MAIN)
-    }).catch((err)=>{
-      setError(err.message)
-    })
-  }
-
-  const onChangeInput = (e) => {
-    const {value, name} = e.target
-    setInputValue({...inputValue, [name]: value})
-  }
-
+    return true;
+  };
 
   return (
-    <S.PopNewCard id="popNewCard">
-      <S.PopNewCardContainer>
-        <S.PopNewCardBlock>
-          <S.PopNewCardContent>
-            <S.PopNewCardTtl>Создание задачи</S.PopNewCardTtl>
-            <S.PopNewCardClose>
-            <Link to={routesPath.MAIN}>&#10006;</Link>
-            </S.PopNewCardClose>
-            <S.PopNewCardWrap>
-              <S.PopNewCardForm action="#">
-                <S.FormNewBlock>
-                  <S.Subttl htmlFor="formTitle">Название задачи</S.Subttl>
-                  <S.FormNewInput
-                        onChange={onChangeInput}
-                        value={inputValue.title}
-                        type="text"
-                        name="title"
-                        id="formTitle"
-                        placeholder="Введите название задачи..."
-                        autoFocus=""
-                      />
-                    </S.FormNewBlock>
-                    <S.FormNewBlock>
-                      <S.Subttl htmlFor="textArea">
-                        Описание задачи
-                      </S.Subttl>
-                      <S.FormNewArea
-                        onChange={onChangeInput}
-                        name="description"
-                        id="textArea"
-                        placeholder="Введите описание задачи..."
-                        defaultValue={""}
-                      />
-                    </S.FormNewBlock>
-                  </S.PopNewCardForm>
-                  <Calendar />
-                </S.PopNewCardWrap>
-                <S.PopNewCardCategories>
-                  <p>Категория</p>
-                  <S.PopNewCardCategoriesTheme>
-
-                    <S.InputRadio
-                      type="radio"
-                      id="radio1"
-                      name="topic"
-                      value="Web Design"
-                      onChange={onChangeInput}
+    <>
+      <ToastContainer />
+      <S.PopNewCard>
+        <S.PopNewCardContainer>
+          <S.PopNewCardBlock>
+            <S.PopNewCardContent>
+              <S.PopNewCardTitle>Создание задачи</S.PopNewCardTitle>
+              <S.PopNewCardClose to="/">&#10006;</S.PopNewCardClose>
+              <S.PopNewCardWrap>
+                <S.PopNewCardForm>
+                  <S.PopNewCardFormBlock>
+                    <S.PopNewCardSubtitle htmlFor="formTitle">
+                      Название задачи
+                    </S.PopNewCardSubtitle>
+                    <S.PopNewCardInput
+                      type="text"
+                      name="name"
+                      id="formTitle"
+                      placeholder="Введите название задачи..."
+                      autoFocus
+                      onChange={(text) => {
+                        setDataHandler("title", text.target.value);
+                      }}
                     />
-                    <S.RadioToolbarLabel1 htmlFor="radio1">Web Design</S.RadioToolbarLabel1>
-
-                    <S.InputRadio
-                      type="radio"
-                      id="radio2"
-                      name="topic"
-                      value="Research"
-                      onChange={onChangeInput}
-                    />
-                    <S.RadioToolbarLabel2 htmlFor="radio2">Research</S.RadioToolbarLabel2>
-
-                    <S.InputRadio
-                      type="radio"
-                      id="radio3"
-                      name="topic"
-                      value="Copywriting"
-                      onChange={onChangeInput}
-                    />
-                    <S.RadioToolbarLabel3 htmlFor="radio3">Copywriting</S.RadioToolbarLabel3>
-
-                  </S.PopNewCardCategoriesTheme>
-                </S.PopNewCardCategories>
-                {error && error}
-                <button onClick={OnAddNewCard} className="form-new__create _hover01" id="btnCreate">
-                  Создать задачу
-                </button>
-              </S.PopNewCardContent>
-            </S.PopNewCardBlock>
-          </S.PopNewCardContainer>
-        </S.PopNewCard>              
-)}
+                  </S.PopNewCardFormBlock>
+                  <S.PopNewCardFormBlock>
+                    <S.PopNewCardSubtitle htmlFor="textArea">
+                      Описание задачи
+                    </S.PopNewCardSubtitle>
+                    <S.PopNewTextArea
+                      name="text"
+                      id="textArea"
+                      placeholder="Введите описание задачи..."
+                      onChange={(text) =>
+                        setDataHandler("description", text.target.value)
+                      }
+                    ></S.PopNewTextArea>
+                  </S.PopNewCardFormBlock>
+                </S.PopNewCardForm>
+                <S.PopNewCardCalendar>
+                  <S.CalendarTitle>Даты</S.CalendarTitle>
+                  <S.Calendar
+                    mode="single"
+                    selected={task.date}
+                    onSelect={(date) => setDataHandler("date", date)}
+                    locale={ru}
+                    footer={
+                      task.date
+                        ? `Срок исполнения: ${moment(task.date).format(
+                            "DD.MM.YYYY"
+                          )}`
+                        : "Выберите дату"
+                    }
+                  />
+                </S.PopNewCardCalendar>
+              </S.PopNewCardWrap>
+              <S.PopNewCardCategories>
+                <S.PopNewCardCategoriesText>
+                  Категория
+                </S.PopNewCardCategoriesText>
+                <S.PopNewCardCategoriesThemes>
+                  {Object.entries(themeList).map((theme) => {
+                    return (
+                      <S.PopNewCardCategoriesTheme
+                        $color={color(theme[1])}
+                        $active={task.topic === theme[1]}
+                        key={theme[1]}
+                        onClick={() => {
+                          setDataHandler("topic", theme[1]);
+                        }}
+                      >
+                        <S.PopNewCardCategoriesThemeText
+                          $color={color(theme[1])}
+                        >
+                          {theme[1]}
+                        </S.PopNewCardCategoriesThemeText>
+                      </S.PopNewCardCategoriesTheme>
+                    );
+                  })}
+                </S.PopNewCardCategoriesThemes>
+              </S.PopNewCardCategories>
+              <S.PopNewCardCreateBtn id="btnCreate" onClick={createNewTask}>
+                Создать задачу
+              </S.PopNewCardCreateBtn>
+            </S.PopNewCardContent>
+          </S.PopNewCardBlock>
+        </S.PopNewCardContainer>
+      </S.PopNewCard>
+    </>
+  );
+};
 
 export default PopNewCard;

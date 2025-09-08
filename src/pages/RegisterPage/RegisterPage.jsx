@@ -40,7 +40,6 @@ export const RegisterPage = () => {
     })
   }
 
-
     return (
         <>
           <WrapperStyle>
